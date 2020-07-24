@@ -1,5 +1,3 @@
-CREATE DATABASE comicManager;
-
 use comicManager;
 
 CREATE TABLE `comic` (
