@@ -5,9 +5,11 @@ const BodyParser = require('body-parser');
 
 const DBSetting = require('./model/dbSetting.js');
 const User = require('./model/user.js');
+const Author = require('./model/author.js');
 
 const dbsettings = DBSetting();
 const user = new User(dbsettings);
+const author = new Author(dbsettings);
 
 // urlencodedとjsonは別々に初期化する
 app.use(BodyParser.urlencoded({
@@ -39,6 +41,34 @@ app.get("/get/user/:userid", async (req, res)=>{
       'status': 'ok',
       'message': '',
       'body': userData
+    }
+  } catch(e) {
+    resBody = {
+      'status': 'ng',
+      'message': '',
+      'body': e.message
+    }
+  }
+  res.header('Content-Type', 'application/json');
+  res.send(resBody);
+});
+
+app.get("/test", async (req, res)=>{
+  let resBody = {};
+  try {
+    await author.createAuthor({
+      id: 1,
+      name: 'テスト作家01'
+    });
+    const resAuthor = await author.gerAuthor(0);
+    const resAuthors = await author.getAuthors();
+    resBody = {
+      'status': 'ok',
+      'message': 'status ok',
+      'body': {
+        resAuthor: resAuthor,
+        resAuthors: resAuthors
+      }
     }
   } catch(e) {
     resBody = {
