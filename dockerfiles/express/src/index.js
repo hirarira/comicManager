@@ -4,8 +4,10 @@ const app = Express();
 const BodyParser = require('body-parser');
 
 const DBSetting = require('./model/dbSetting.js');
+const User = require('./model/user.js');
 
-const sequelize = DBSetting();
+const dbsettings = DBSetting();
+const user = new User(dbsettings);
 
 // urlencodedとjsonは別々に初期化する
 app.use(BodyParser.urlencoded({
@@ -21,10 +23,32 @@ const server = app.listen(3333, function(){
 app.get("/status", (req, res)=>{
   const testBody = {
     'status': 'ok',
-    'message': 'status ok'
+    'message': 'status ok',
+    'body': ''
   }
   res.header('Content-Type', 'application/json');
   res.send(testBody);
+});
+
+app.get("/get/user/:userid", async (req, res)=>{
+  let resBody = {};
+  try {
+    const userid = req.params.userid;
+    const userData = await user.gerUser(userid);
+    resBody = {
+      'status': 'ok',
+      'message': '',
+      'body': userData
+    }
+  } catch(e) {
+    resBody = {
+      'status': 'ng',
+      'message': '',
+      'body': e.message
+    }
+  }
+  res.header('Content-Type', 'application/json');
+  res.send(resBody);
 });
 
 // 404
