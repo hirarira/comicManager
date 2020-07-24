@@ -11,3 +11,12 @@ services:
       MYSQL_USER: admin
       MYSQL_PASSWORD: mariadb
       MYSQL_ROOT_PASSWORD: mariadb
+  express:
+    build: ../dockerfiles/express/
+    volumes:
+      - ../dockerfiles/express/src:/server
+    ports:
+      - "3333:3333"
+    links:
+      - mariadb
+    command: [sh, -c, npm install && npm start]
