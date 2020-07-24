@@ -3,7 +3,9 @@ const Express = require("express");
 const app = Express();
 const BodyParser = require('body-parser');
 
-const Sequelize = require('sequelize');
+const DBSetting = require('./model/dbSetting.js');
+
+const sequelize = DBSetting();
 
 // urlencodedとjsonは別々に初期化する
 app.use(BodyParser.urlencoded({
