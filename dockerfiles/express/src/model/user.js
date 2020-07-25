@@ -17,7 +17,7 @@ class User {
       timestamps: false
     });
   }
-  async gerUser(userid) {
+  async getUser(userid) {
     return await this.model.findOne({
       where: {
         id: userid

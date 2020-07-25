@@ -16,7 +16,7 @@ class Author {
       timestamps: false
     });
   }
-  async gerAuthor(author_id) {
+  async getAuthor(author_id) {
     return await this.model.findOne({
       where: {
         id: author_id
