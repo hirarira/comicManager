@@ -53,13 +53,52 @@ app.get("/get/user/:userid", async (req, res)=>{
   res.send(resBody);
 });
 
+app.get("/get/authors", async (req, res)=>{
+  let resBody = {};
+  try {
+    const authorList = await author.getAuthors();
+    resBody = {
+      'status': 'ok',
+      'message': '',
+      'body': authorList
+    }
+  } catch(e) {
+    resBody = {
+      'status': 'ng',
+      'message': '',
+      'body': e.message
+    }
+  }
+  res.header('Content-Type', 'application/json');
+  res.send(resBody);
+});
+
+app.post("/create/author", async (req, res)=>{
+  let resBody = {};
+  try {
+    const addName = req.body.name;
+    const result = await author.createAuthor({
+      name: addName
+    });
+    resBody = {
+      'status': 'ok',
+      'message': '',
+      'body': result
+    }
+  } catch(e) {
+    resBody = {
+      'status': 'ng',
+      'message': '',
+      'body': e.message
+    }
+  }
+  res.header('Content-Type', 'application/json');
+  res.send(resBody);
+});
+
 app.get("/test", async (req, res)=>{
   let resBody = {};
   try {
-    await author.createAuthor({
-      id: 1,
-      name: 'テスト作家01'
-    });
     const resAuthor = await author.gerAuthor(0);
     const resAuthors = await author.getAuthors();
     resBody = {

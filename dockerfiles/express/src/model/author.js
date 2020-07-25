@@ -25,7 +25,6 @@ class Author {
   }
   async createAuthor(options) {
     return await this.model.create({
-      id: options.id,
       name: options.name
     });
   }
