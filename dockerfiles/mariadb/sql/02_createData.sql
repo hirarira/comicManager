@@ -15,4 +15,4 @@ INSERT INTO `comicVol` (`comicID`, `number`) VALUES (1, 3);
 INSERT INTO `comicVol` (`comicID`, `number`) VALUES (2, 1);
 
 INSERT INTO `comicVolInfo` (`comicVolID`, `userID`,`readFlag`, `readDate`, `buyFlag`, `buyDate`, `comment`) VALUES (1, 1, 1, NULL, 1, NULL, '購入既読');
-INSERT INTO `comicVolInfo` (`comicVolID`, `userID`,`readFlag`, `readDate`, `buyFlag`, `buyDate`, `comment`) VALUES (1, 1, 1, NULL, 0, NULL, '未購入既読');
+INSERT INTO `comicVolInfo` (`comicVolID`, `userID`,`readFlag`, `readDate`, `buyFlag`, `buyDate`, `comment`) VALUES (2, 1, 1, NULL, 0, NULL, '未購入既読');
