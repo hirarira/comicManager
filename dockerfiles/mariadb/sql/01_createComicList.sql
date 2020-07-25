@@ -36,6 +36,7 @@ CREATE TABLE `comicVol` (
   `comicID` int(11) NOT NULL,
   `number` varchar(128) NOT NULL,
   `image` text,
+  UNIQUE (`comicID`, `number`),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -48,5 +49,6 @@ CREATE TABLE `comicVolInfo` (
   `buyFlag` tinyint(1) DEFAULT 0,
   `buyDate` int(11),
   `comment` text,
+  UNIQUE (`comicVolID`, `userID`),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

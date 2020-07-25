@@ -218,6 +218,34 @@ app.post("/create/comicVol", async (req, res)=>{
   res.send(resBody);
 });
 
+app.post("/create/comicVolInfo", async (req, res)=>{
+  let resBody = {};
+  try {
+    const resComicVol = await comicVolInfo.createComicVolInfo({
+      comicVolID: req.body.comicVolID,
+      userID: req.body.userID,
+      readFlag: (req.body.readFlag === 'true'),
+      readDate: req.body.readDate,
+      buyFlag: (req.body.buyFlag === 'true'),
+      buyDate: req.body.buyDate,
+      comment: req.body.comment
+    });
+    resBody = {
+      'status': 'ok',
+      'message': '',
+      'body': resComicVol
+    }
+  } catch(e) {
+    resBody = {
+      'status': 'ng',
+      'message': '',
+      'body': e.message
+    }
+  }
+  res.header('Content-Type', 'application/json');
+  res.send(resBody);
+});
+
 app.get("/test", async (req, res)=>{
   let resBody = {};
   try {

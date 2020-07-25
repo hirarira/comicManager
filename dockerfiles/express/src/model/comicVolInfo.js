@@ -32,12 +32,27 @@ class ComicVolInfo {
       }
     });
     const resBody = comicVol.map((x)=>{
+      const vol = x.dataValues;
       const info = comicVolInfoList.find((y)=>{
-        return x.id === y.comicVolID;
+        return vol.id === y.comicVolID;
       });
-      return Object.assign(x, info);
+      if(info) {
+        vol.info = info.dataValues;
+      }
+      return vol;
     });
     return resBody;
+  }
+  async createComicVolInfo(options) {
+    return await this.model.create({
+      comicVolID: options.comicVolID,
+      userID: options.userID,
+      readFlag: options.readFlag,
+      readDate: options.readDate,
+      buyFlag: options.buyFlag,
+      buyDate: options.buyDate,
+      comment: options.comment
+    });
   }
 }
 
