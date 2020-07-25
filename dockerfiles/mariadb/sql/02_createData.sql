@@ -1,7 +1,13 @@
 use comicManager;
 
 INSERT INTO `user` (
-    `id`, `username`, `pass`
+    `username`, `pass`
 ) VALUES (
-    1, 'hirarira', 'hirarira'
+    'hirarira', 'hirarira'
+);
+
+INSERT INTO `author` (
+    `name`
+) VALUES (
+    'テスト太郎'
 );
