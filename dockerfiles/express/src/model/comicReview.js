@@ -24,7 +24,7 @@ class ComicReview {
       }
     });
   }
-  async createComic(options) {
+  async createComicReview(options) {
     return await this.model.create({
       comicID: options.comicID,
       userID: options.userID,

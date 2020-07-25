@@ -251,18 +251,19 @@ app.post("/create/comicVolInfo", async (req, res)=>{
   res.send(resBody);
 });
 
-app.get("/test", async (req, res)=>{
+app.post("/create/comicReview", async (req, res)=>{
   let resBody = {};
   try {
-    const resAuthor = await author.gerAuthor(0);
-    const resAuthors = await author.getAuthors();
+    const resComicReview = await comicReview.createComicReview({
+      comicID: req.body.comicID,
+      userID: req.body.userID,
+      rate: req.body.rate,
+      comment: req.body.comment
+    });
     resBody = {
       'status': 'ok',
-      'message': 'status ok',
-      'body': {
-        resAuthor: resAuthor,
-        resAuthors: resAuthors
-      }
+      'message': '',
+      'body': resComicReview
     }
   } catch(e) {
     resBody = {
