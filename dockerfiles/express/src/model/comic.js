@@ -1,36 +1,42 @@
-class Author {
+class Comic {
   constructor(dbsetting) {
     this.sequelize = require('sequelize');
-    this.model = dbsetting.define('author', {
+    this.model = dbsetting.define('comic', {
       id: {
         type: this.sequelize.INTEGER,
         primaryKey: true
       },
-      name: {
+      title: {
         type: this.sequelize.STRING,
         unique: true
-      }
+      },
+      authorID: this.sequelize.INTEGER,
+      endFlag: this.sequelize.BOOLEAN,
+      image: this.sequelize.TEXT,
     }, {
       // モデル名をそのままテーブル名として使う
       freezeTableName: true,
       timestamps: false
     });
   }
-  async gerAuthor(author_id) {
+  async getComic(id) {
     return await this.model.findOne({
       where: {
-        id: author_id
+        id: id
       }
     });
   }
-  async getAuthors() {
+  async getComicList() {
     return await this.model.findAll();
   }
-  async createAuthor(options) {
+  async createComic(options) {
     return await this.model.create({
-      name: options.name
+      title: options.title,
+      authorID: options.authorID,
+      endFlag: false,
+      image: options.image
     });
   }
 }
 
-module.exports = Author;
+module.exports = Comic;

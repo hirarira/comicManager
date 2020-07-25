@@ -6,10 +6,12 @@ const BodyParser = require('body-parser');
 const DBSetting = require('./model/dbSetting.js');
 const User = require('./model/user.js');
 const Author = require('./model/author.js');
+const Comic = require('./model/comic.js');
 
 const dbsettings = DBSetting();
 const user = new User(dbsettings);
 const author = new Author(dbsettings);
+const comic = new Comic(dbsettings);
 
 // urlencodedとjsonは別々に初期化する
 app.use(BodyParser.urlencoded({
@@ -84,6 +86,71 @@ app.post("/create/author", async (req, res)=>{
       'status': 'ok',
       'message': '',
       'body': result
+    }
+  } catch(e) {
+    resBody = {
+      'status': 'ng',
+      'message': '',
+      'body': e.message
+    }
+  }
+  res.header('Content-Type', 'application/json');
+  res.send(resBody);
+});
+
+app.get("/get/comic/:id", async (req, res)=>{
+  let resBody = {};
+  try {
+    const id = req.params.id; 
+    const resComics = await comic.getComic(id);
+    resBody = {
+      'status': 'ok',
+      'message': '',
+      'body': resComics
+    }
+  } catch(e) {
+    resBody = {
+      'status': 'ng',
+      'message': '',
+      'body': e.message
+    }
+  }
+  res.header('Content-Type', 'application/json');
+  res.send(resBody);
+});
+
+app.get("/get/comicList", async (req, res)=>{
+  let resBody = {};
+  try {
+    const resComics = await comic.getComicList();
+    resBody = {
+      'status': 'ok',
+      'message': '',
+      'body': resComics
+    }
+  } catch(e) {
+    resBody = {
+      'status': 'ng',
+      'message': '',
+      'body': e.message
+    }
+  }
+  res.header('Content-Type', 'application/json');
+  res.send(resBody);
+});
+
+app.post("/create/comic", async (req, res)=>{
+  let resBody = {};
+  try {
+    const resComics = await comic.createComic({
+      title: req.body.title,
+      authorID: req.body.authorID,
+      image: req.body.image
+    });
+    resBody = {
+      'status': 'ok',
+      'message': '',
+      'body': resComics
     }
   } catch(e) {
     resBody = {
