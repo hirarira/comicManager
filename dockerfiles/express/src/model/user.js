@@ -6,7 +6,10 @@ class User {
         type: this.sequelize.INTEGER,
         primaryKey: true
       },
-      username: this.sequelize.TEXT,
+      username: {
+        type: this.sequelize.TEXT,
+        unique: true
+      },
       pass: this.sequelize.STRING
     }, {
       // モデル名をそのままテーブル名として使う

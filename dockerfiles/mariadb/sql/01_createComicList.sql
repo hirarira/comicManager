@@ -2,8 +2,8 @@ use comicManager;
 
 CREATE TABLE `comic` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` text NOT NULL UNIQUE,
-  `authorID` text NOT NULL,
+  `title` varchar(128) NOT NULL UNIQUE,
+  `authorID` int(11) NOT NULL,
   `endFlag` tinyint(1) NOT NULL,
   `image` text,
   PRIMARY KEY (`id`)
@@ -27,7 +27,7 @@ CREATE TABLE `user` (
 
 CREATE TABLE `author` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` text NOT NULL UNIQUE,
+  `name` varchar(128) NOT NULL UNIQUE,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
