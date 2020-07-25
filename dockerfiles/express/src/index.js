@@ -104,6 +104,10 @@ app.post("/create/author", async (req, res)=>{
   res.send(resBody);
 });
 
+/**
+ * Comics 漫画の概要を操作する関数
+ */
+
 app.get("/get/comic/:id", async (req, res)=>{
   const userID = 1;
   let resBody = {};
@@ -172,6 +176,35 @@ app.post("/create/comic", async (req, res)=>{
   res.send(resBody);
 });
 
+app.post("/update/comic", async (req, res)=>{
+  let resBody = {};
+  try {
+    const resComics = await comic.updateComic({
+      id: req.body.id,
+      title: req.body.title,
+      authorID: req.body.authorID,
+      endFlag: (req.body.endFlag === 'true'),
+      image: req.body.image
+    });
+    resBody = {
+      'status': 'ok',
+      'message': '',
+      'body': resComics
+    }
+  } catch(e) {
+    resBody = {
+      'status': 'ng',
+      'message': '',
+      'body': e.message
+    }
+  }
+  res.header('Content-Type', 'application/json');
+  res.send(resBody);
+});
+
+/**
+ * ComicVol: 漫画の各話情報を管理する関数
+ */
 app.get("/get/comicVol/:comicID", async (req, res)=>{
   let resBody = {};
   try {

@@ -37,6 +37,18 @@ class Comic {
       image: options.image
     });
   }
+  async updateComic(options) {
+    return await this.model.update({
+      title: options.title,
+      authorID: options.authorID,
+      endFlag: options.endFlag,
+      image: options.image
+    },{
+      where: {
+        id: options.id
+      }
+    })
+  }
 }
 
 module.exports = Comic;
