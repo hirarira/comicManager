@@ -54,6 +54,20 @@ class ComicVolInfo {
       comment: options.comment
     });
   }
+  async updateComicVolInfo(options) {
+    return await this.model.update({
+      readFlag: options.readFlag,
+      readDate: options.readDate,
+      buyFlag: options.buyFlag,
+      buyDate: options.buyDate,
+      comment: options.comment
+    },{
+      where: {
+        comicVolID: options.comicVolID,
+        userID: options.userID
+      }
+    })
+  }
 }
 
 module.exports = ComicVolInfo;

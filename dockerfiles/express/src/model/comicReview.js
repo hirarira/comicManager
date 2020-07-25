@@ -32,6 +32,17 @@ class ComicReview {
       comment: options.comment
     });
   }
+  async updateComicReview(options) {
+    return await this.model.update({
+      rate: options.rate,
+      comment: options.comment
+    },{
+      where: {
+        comicID: options.comicID,
+        userID: options.userID
+      }
+    })
+  }
 }
 
 module.exports = ComicReview;

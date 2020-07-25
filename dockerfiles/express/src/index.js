@@ -107,20 +107,25 @@ app.post("/create/author", async (req, res)=>{
 /**
  * Comics 漫画の概要を操作する関数
  */
-app.get("/get/comic/:id", async (req, res)=>{
-  const userID = 1;
+app.get("/get/comic/:comicID", async (req, res)=>{
   let resBody = {};
   try {
-    const id = req.params.id; 
-    const resComics = await comic.getComic(id);
+    const userID = 1;
+    const comicID = req.params.comicID;
+    const resComics = await comic.getComic(comicID);
     const resAuthor = resComics? await author.getAuthor(resComics.authorID): '';
-    const resComicReview = await comicReview.getReview(id, userID);
+    let resComicVol = await comicVol.getComicVol(comicID);
+    resComicVol = await comicVolInfo.getComicVol(resComicVol, userID);
+    const resComicReview = await comicReview.getReview(comicID, userID);
     resBody = {
       'status': 'ok',
       'message': '',
-      'body': resComics,
-      'author': resAuthor,
-      'review': resComicReview
+      'body': {
+        about: resComics,
+        author: resAuthor,
+        review: resComicReview,
+        detail: resComicVol
+      }
     }
   } catch(e) {
     resBody = {
@@ -206,35 +211,6 @@ app.post("/update/comic", async (req, res)=>{
 /**
  * ComicVol: 漫画の各話情報を管理する関数
  */
-app.get("/get/comicVol/:comicID", async (req, res)=>{
-  let resBody = {};
-  try {
-    const userID = 1;
-    const comicID = req.params.comicID;
-    const resComics = await comic.getComic(comicID);
-    const resAuthor = resComics? await author.getAuthor(resComics.authorID): '';
-    let resComicVol = await comicVol.getComicVol(comicID);
-    resComicVol = await comicVolInfo.getComicVol(resComicVol, userID);
-    resBody = {
-      'status': 'ok',
-      'message': '',
-      'body': {
-        about: resComics,
-        author: resAuthor,
-        detail: resComicVol
-      }
-    }
-  } catch(e) {
-    resBody = {
-      'status': 'ng',
-      'message': '',
-      'body': e.message
-    }
-  }
-  res.header('Content-Type', 'application/json');
-  res.send(resBody);
-});
-
 app.post("/create/comicVol", async (req, res)=>{
   let resBody = {};
   try {
@@ -315,6 +291,34 @@ app.post("/create/comicVolInfo", async (req, res)=>{
   res.send(resBody);
 });
 
+app.post("/update/comicVolInfo", async (req, res)=>{
+  let resBody = {};
+  try {
+    const resComicVol = await comicVolInfo.updateComicVolInfo({
+      comicVolID: req.body.comicVolID,
+      userID: req.body.userID,
+      readFlag: (req.body.readFlag === 'true'),
+      readDate: req.body.readDate,
+      buyFlag: (req.body.buyFlag === 'true'),
+      buyDate: req.body.buyDate,
+      comment: req.body.comment
+    });
+    resBody = {
+      'status': 'ok',
+      'message': '',
+      'body': resComicVol
+    }
+  } catch(e) {
+    resBody = {
+      'status': 'ng',
+      'message': '',
+      'body': e.message
+    }
+  }
+  res.header('Content-Type', 'application/json');
+  res.send(resBody);
+});
+
 /**
  * comicReview: 漫画の既読・コメントを管理する関数
  */
@@ -322,6 +326,31 @@ app.post("/create/comicReview", async (req, res)=>{
   let resBody = {};
   try {
     const resComicReview = await comicReview.createComicReview({
+      comicID: req.body.comicID,
+      userID: req.body.userID,
+      rate: req.body.rate,
+      comment: req.body.comment
+    });
+    resBody = {
+      'status': 'ok',
+      'message': '',
+      'body': resComicReview
+    }
+  } catch(e) {
+    resBody = {
+      'status': 'ng',
+      'message': '',
+      'body': e.message
+    }
+  }
+  res.header('Content-Type', 'application/json');
+  res.send(resBody);
+});
+
+app.post("/update/comicReview", async (req, res)=>{
+  let resBody = {};
+  try {
+    const resComicReview = await comicReview.updateComicReview({
       comicID: req.body.comicID,
       userID: req.body.userID,
       rate: req.body.rate,
