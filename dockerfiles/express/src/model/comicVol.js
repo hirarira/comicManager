@@ -29,6 +29,16 @@ class ComicVol {
       image: options.image
     });
   }
+  async updateComicVol(options) {
+    return await this.model.update({
+      image: options.image
+    },{
+      where: {
+        comicID: options.comicID,
+        number: options.number
+      }
+    })
+  }
 }
 
 module.exports = ComicVol;

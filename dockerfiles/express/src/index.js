@@ -259,6 +259,31 @@ app.post("/create/comicVol", async (req, res)=>{
   res.send(resBody);
 });
 
+
+app.post("/update/comicVol", async (req, res)=>{
+  let resBody = {};
+  try {
+    const resComicVol = await comicVol.updateComicVol({
+      comicID: req.body.comicID,
+      number: req.body.number,
+      image: req.body.image
+    });
+    resBody = {
+      'status': 'ok',
+      'message': '',
+      'body': resComicVol
+    }
+  } catch(e) {
+    resBody = {
+      'status': 'ng',
+      'message': '',
+      'body': e.message
+    }
+  }
+  res.header('Content-Type', 'application/json');
+  res.send(resBody);
+});
+
 /**
  * comicVolInfo: 漫画の各話の既読・コメントを管理する関数
  */
