@@ -9,6 +9,7 @@ const Author = require('./model/author.js');
 const Comic = require('./model/comic.js');
 const ComicVol = require('./model/comicVol.js');
 const ComicVolInfo = require('./model/comicVolInfo.js');
+const ComicReview = require('./model/comicReview.js');
 
 const dbsettings = DBSetting();
 const user = new User(dbsettings);
@@ -16,6 +17,7 @@ const author = new Author(dbsettings);
 const comic = new Comic(dbsettings);
 const comicVol = new ComicVol(dbsettings);
 const comicVolInfo = new ComicVolInfo(dbsettings);
+const comicReview = new ComicReview(dbsettings);
 
 // urlencodedとjsonは別々に初期化する
 app.use(BodyParser.urlencoded({
@@ -103,14 +105,17 @@ app.post("/create/author", async (req, res)=>{
 });
 
 app.get("/get/comic/:id", async (req, res)=>{
+  const userID = 1;
   let resBody = {};
   try {
     const id = req.params.id; 
     const resComics = await comic.getComic(id);
+    const resComicReview = await comicReview.getReview(id, userID);
     resBody = {
       'status': 'ok',
       'message': '',
-      'body': resComics
+      'body': resComics,
+      'review': resComicReview
     }
   } catch(e) {
     resBody = {

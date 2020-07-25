@@ -15,6 +15,7 @@ CREATE TABLE `comicReview` (
   `userID` int(11) NOT NULL,
   `rate` int(11),
   `comment` text,
+  UNIQUE (`comicID`, `userID`),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
