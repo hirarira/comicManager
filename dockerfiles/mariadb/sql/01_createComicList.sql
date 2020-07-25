@@ -43,9 +43,9 @@ CREATE TABLE `comicVolInfo` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `comicVolID` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
-  `readFlag` tinyint(1) NOT NULL,
+  `readFlag` tinyint(1) DEFAULT 0,
   `readDate` int(11),
-  `buyFlag` tinyint(1) NOT NULL,
+  `buyFlag` tinyint(1) DEFAULT 0,
   `buyDate` int(11),
   `comment` text,
   PRIMARY KEY (`id`)
