@@ -1,5 +1,6 @@
 import { FC } from "react";
 import React from "react";
+import Header from "../components/Header";
 
 interface Props {
 
@@ -8,7 +9,7 @@ interface Props {
 const Home: FC<Props> = (()=>{
   return (
     <div>
-      hoge
+      <Header />
     </div>
   )
 });
