@@ -9,28 +9,39 @@ const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: 'center',
   },
-  title: {
+  headerTitle: {
     fontSize: '1.5rem',
     marginLeft: '2rem'
+  },
+  title: {
+    marginTop: '1rem',
+    fontSize: '2rem',
+    color: '#778899'
   }
 }));
 
 const Header: FC = (()=>{
   const classes = useStyles();
+  const clickMenu = () => {
+    console.log("click!");
+  }
   return (
     <div>
       <Grid container className={classes.root}>
         <Grid item xs={12}>
           <AppBar position="static">
             <Toolbar>
-              <IconButton edge="start" color="inherit" aria-label="menu">
+              <IconButton edge="start" color="inherit" aria-label="menu" onClick={clickMenu}>
                 <MenuIcon />
               </IconButton>
-              <Typography variant="h6" className={classes.title}>
+              <Typography variant="h6" className={classes.headerTitle}>
                 漫画管理アプリ
               </Typography>
             </Toolbar>
           </AppBar>
+        </Grid>
+        <Grid item xs={12} className={classes.title}>
+          漫画管理アプリ
         </Grid>
       </Grid>
     </div>
