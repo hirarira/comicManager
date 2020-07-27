@@ -30,13 +30,21 @@ const server = app.listen(3333, function(){
   console.log("Node.js is listening to PORT:" + server.address().port);
 });
 
+// 共通のヘッダーを追加する
+const addCommonHeader = (res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header('Content-Type', 'application/json');
+  return res;
+}
+
 app.get("/status", (req, res)=>{
   const testBody = {
     'status': 'ok',
     'message': 'status ok',
     'body': ''
   }
-  res.header('Content-Type', 'application/json');
+  res = addCommonHeader(res);
   res.send(testBody);
 });
 
@@ -57,7 +65,7 @@ app.get("/get/user/:userid", async (req, res)=>{
       'body': e.message
     }
   }
-  res.header('Content-Type', 'application/json');
+  res = addCommonHeader(res);
   res.send(resBody);
 });
 
@@ -77,7 +85,7 @@ app.get("/get/authors", async (req, res)=>{
       'body': e.message
     }
   }
-  res.header('Content-Type', 'application/json');
+  res = addCommonHeader(res);
   res.send(resBody);
 });
 
@@ -100,7 +108,7 @@ app.post("/create/author", async (req, res)=>{
       'body': e.message
     }
   }
-  res.header('Content-Type', 'application/json');
+  res = addCommonHeader(res);
   res.send(resBody);
 });
 
@@ -134,7 +142,7 @@ app.get("/get/comic/:comicID", async (req, res)=>{
       'body': e.message
     }
   }
-  res.header('Content-Type', 'application/json');
+  res = addCommonHeader(res);
   res.send(resBody);
 });
 
@@ -154,7 +162,7 @@ app.get("/get/comicList", async (req, res)=>{
       'body': e.message
     }
   }
-  res.header('Content-Type', 'application/json');
+  res = addCommonHeader(res);
   res.send(resBody);
 });
 
@@ -178,7 +186,7 @@ app.post("/create/comic", async (req, res)=>{
       'body': e.message
     }
   }
-  res.header('Content-Type', 'application/json');
+  res = addCommonHeader(res);
   res.send(resBody);
 });
 
@@ -204,7 +212,7 @@ app.post("/update/comic", async (req, res)=>{
       'body': e.message
     }
   }
-  res.header('Content-Type', 'application/json');
+  res = addCommonHeader(res);
   res.send(resBody);
 });
 
@@ -231,7 +239,7 @@ app.post("/create/comicVol", async (req, res)=>{
       'body': e.message
     }
   }
-  res.header('Content-Type', 'application/json');
+  res = addCommonHeader(res);
   res.send(resBody);
 });
 
@@ -256,7 +264,7 @@ app.post("/update/comicVol", async (req, res)=>{
       'body': e.message
     }
   }
-  res.header('Content-Type', 'application/json');
+  res = addCommonHeader(res);
   res.send(resBody);
 });
 
@@ -287,7 +295,7 @@ app.post("/create/comicVolInfo", async (req, res)=>{
       'body': e.message
     }
   }
-  res.header('Content-Type', 'application/json');
+  res = addCommonHeader(res);
   res.send(resBody);
 });
 
@@ -315,7 +323,7 @@ app.post("/update/comicVolInfo", async (req, res)=>{
       'body': e.message
     }
   }
-  res.header('Content-Type', 'application/json');
+  res = addCommonHeader(res);
   res.send(resBody);
 });
 
@@ -343,7 +351,7 @@ app.post("/create/comicReview", async (req, res)=>{
       'body': e.message
     }
   }
-  res.header('Content-Type', 'application/json');
+  res = addCommonHeader(res);
   res.send(resBody);
 });
 
@@ -368,16 +376,16 @@ app.post("/update/comicReview", async (req, res)=>{
       'body': e.message
     }
   }
-  res.header('Content-Type', 'application/json');
+  res = addCommonHeader(res);
   res.send(resBody);
 });
 
 // 404
 app.use(function(req, res, next) {
-  res.header('Content-Type', 'application/json');
   let res_body = {
     status: 'ng',
     body: '404 not found'
   };
+  res = addCommonHeader(res);
   res.status(404).send(res_body);
 });
