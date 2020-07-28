@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
 const Header: FC = (()=>{
   const classes = useStyles();
   const clickMenu = () => {
-    console.log("click!");
+    // TOPページ遷移
+    window.location.href = "/";
   }
   return (
     <div>
