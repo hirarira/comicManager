@@ -2,7 +2,7 @@ import { FC, useEffect, useCallback, useState } from "react";
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Header from "../components/Header";
-import { Grid, FormControl, InputLabel, Select, MenuItem, Button, Paper } from "@material-ui/core";
+import { Grid, FormControl, InputLabel, Select, MenuItem, Button, Paper, Link } from "@material-ui/core";
 import Comics from '../api/comics';
 
 interface Props {
@@ -68,9 +68,11 @@ const Home: FC<Props> = (()=>{
                 })}
               </Select>
             </FormControl>
-            <Button variant="contained" color="primary" style={{ marginTop: "10px" }}>
-              移動
-            </Button>
+            <Link href={`/detail?comicID=${selectComic}`}>
+              <Button variant="contained" color="primary" style={{ marginTop: "10px" }}>
+                移動
+              </Button>
+            </Link>
           </Grid>
         </Paper>
       </Grid>
