@@ -2,7 +2,7 @@ import { FC, useEffect, useCallback, useState } from "react";
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Header from "../components/Header";
-import { Grid, FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
+import { Grid, FormControl, InputLabel, Select, MenuItem, Button, Paper } from "@material-ui/core";
 import Comics from '../api/comics';
 
 interface Props {
@@ -13,10 +13,15 @@ const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: 'center'
   },
+  paperArea: {
+    margin: "20px",
+    padding: "20px",
+    width: "640px"
+  },
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
-    maxWidth: 300
+    maxWidth: 240
   }
 }));
 
@@ -44,27 +49,30 @@ const Home: FC<Props> = (()=>{
       <Header />
       {/** 漫画検索 */}
       <Grid container justify="center" className={classes.root}>
-        <Grid item xs={12}>
-          漫画検索
-        </Grid>
-        <Grid item xs={8}>
-          <FormControl className={classes.formControl}>
-            <InputLabel id="comic_title_label">漫画タイトル</InputLabel>
-            <Select
-              value={selectComic}
-              onChange={handleComicChange}
-            >
-              {comicList.map((x: any)=>{
-                return (
-                  <MenuItem key={x.id} value={x.id}>{x.title}</MenuItem >
-                )
-              })}
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={4}>
-          検索
-        </Grid>
+        <Paper className={classes.paperArea}>
+          <Grid item xs={12}>
+            漫画検索
+          </Grid>
+          <Grid item xs={12}>
+            <FormControl>
+              <InputLabel id="comic_title_label">漫画タイトル</InputLabel>
+              <Select
+                value={selectComic}
+                onChange={handleComicChange}
+                className={classes.formControl}
+              >
+                {comicList.map((x: any)=>{
+                  return (
+                    <MenuItem key={x.id} value={x.id}>{x.title}</MenuItem >
+                  )
+                })}
+              </Select>
+            </FormControl>
+            <Button variant="contained" color="primary" style={{ marginTop: "10px" }}>
+              移動
+            </Button>
+          </Grid>
+        </Paper>
       </Grid>
     </div>
   )
