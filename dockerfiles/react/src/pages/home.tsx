@@ -68,7 +68,7 @@ const Home: FC<Props> = (()=>{
                 })}
               </Select>
             </FormControl>
-            <Link href={`/detail?comicID=${selectComic}`}>
+            <Link href={`/detail/${selectComic}`}>
               <Button variant="contained" color="primary" style={{ marginTop: "10px" }}>
                 移動
               </Button>

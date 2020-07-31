@@ -10,7 +10,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/sample" component={Sample} />
-        <Route exact path="/detail" component={ComicDetail} />
+        <Route exact path="/detail/:comicID" component={ComicDetail} />
       </Switch>
     </React.Fragment>
   )

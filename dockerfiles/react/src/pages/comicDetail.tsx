@@ -1,16 +1,18 @@
 import { FC } from "react";
 import Header from "../components/Header";
 import React from "react";
+import { RouteComponentProps } from 'react-router-dom'
 
-interface Props {
+type DetailProps = RouteComponentProps<{
+  comicID: string
+}>
 
-}
-
-const ComicDetail: FC<Props> = (()=>{
+const ComicDetail: FC<DetailProps> = ((props)=>{
   return (
     <div>
       <Header/>
       漫画詳細ページ
+      {props.match.params.comicID}
     </div>
   )
 });
