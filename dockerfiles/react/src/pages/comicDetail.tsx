@@ -2,9 +2,10 @@ import React, { FC, useCallback, useState, useEffect } from "react";
 import Header from "../components/Header";
 import { RouteComponentProps } from 'react-router-dom'
 import Comics from '../api/comics';
-import { makeStyles, Grid, Paper, TableRow, TableCell, TableBody, Table, TableContainer } from "@material-ui/core";
+import { makeStyles, Grid } from "@material-ui/core";
 import { ComicDetailFormat, initComicDetail } from "../type/ComicDetail";
 import ComicAboutTable from "../components/ComicAboutTable";
+import ComicDetailTable from "../components/ComicDetailTable";
 
 type DetailProps = RouteComponentProps<{
   comicID: string
@@ -22,6 +23,11 @@ const useStyles = makeStyles((theme) => ({
   table: {
     margin: "20px",
     maxWidth: "640px"
+  },
+  subtitle: {
+    marginTop: '1rem',
+    fontSize: '1.5rem',
+    color: '#778899'
   }
 }));
 
@@ -52,6 +58,12 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
         </Grid>
         <Grid item xs={6}>
           書影
+        </Grid>
+        <Grid item xs={12}>
+          <p className={classes.subtitle}>各話詳細</p>
+          <ComicDetailTable
+            detail={comic.detail}
+          />
         </Grid>
       </Grid>
     </div>

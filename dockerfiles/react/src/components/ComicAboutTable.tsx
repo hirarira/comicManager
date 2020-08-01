@@ -21,7 +21,7 @@ const ComicAboutTable: FC<Props> = ((props)=>{
       <Table>
         <TableBody>
           <TableRow>
-            <TableCell style={{minWidth: "120px"}}>
+            <TableCell style={{minWidth: "50px"}}>
               タイトル
             </TableCell>
             <TableCell>
