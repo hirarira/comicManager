@@ -62,6 +62,14 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
                     {comic.about.endFlag.toString()}
                   </TableCell>
                 </TableRow>
+                <TableRow>
+                  <TableCell>
+                    作者
+                  </TableCell>
+                  <TableCell>
+                    {comic.author.name}
+                  </TableCell>
+                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>
