@@ -4,6 +4,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import Comics from '../api/comics';
 import { makeStyles, Grid, Paper, TableRow, TableCell, TableBody, Table, TableContainer } from "@material-ui/core";
 import { ComicDetailFormat, initComicDetail } from "../type/ComicDetail";
+import ComicAboutTable from "../components/ComicAboutTable";
 
 type DetailProps = RouteComponentProps<{
   comicID: string
@@ -43,36 +44,11 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
       <Header/>
       <Grid container justify="center" className={classes.root}>
         <Grid item xs={6}>
-        <TableContainer component={Paper} className={classes.table}>
-            <Table>
-              <TableBody>
-                <TableRow>
-                  <TableCell style={{minWidth: "120px"}}>
-                    タイトル
-                  </TableCell>
-                  <TableCell>
-                    {comic.about.title}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>
-                    完結済み
-                  </TableCell>
-                  <TableCell>
-                    {comic.about.endFlag.toString()}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>
-                    作者
-                  </TableCell>
-                  <TableCell>
-                    {comic.author.name}
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <ComicAboutTable
+            title={comic.about.title}
+            endFlag={comic.about.endFlag}
+            author={comic.author.name}
+          />
         </Grid>
         <Grid item xs={6}>
           書影
