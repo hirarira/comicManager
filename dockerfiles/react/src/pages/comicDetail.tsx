@@ -61,6 +61,8 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
         </Grid>
         <Grid item xs={12}>
           <p className={classes.subtitle}>各話詳細</p>
+        </Grid>
+        <Grid item xs={12}>
           <ComicDetailTable
             detail={comic.detail}
           />

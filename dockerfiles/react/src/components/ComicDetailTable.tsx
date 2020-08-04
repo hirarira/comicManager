@@ -7,7 +7,10 @@ interface Props {
 
 const useStyles = makeStyles((theme) => ({
   table: {
-    margin: "20px",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: "20px",
+    marginBottom: "20px",
     width: "90%",
     maxWidth: "640px"
   },
