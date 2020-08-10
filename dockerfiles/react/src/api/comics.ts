@@ -13,6 +13,13 @@ class Comics {
     const url = this.host + '/get/comic/' + id;
     return await axios.get(url);
   }
+  async createComicVol(comicID: string, number: number) {
+    const url = `${this.host}/create/comicVol`;
+    return await axios.post(url, {
+      comicID: comicID,
+      number: String(number)
+    });
+  }
 }
 
 export default Comics;

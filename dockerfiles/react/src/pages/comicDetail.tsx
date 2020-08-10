@@ -2,7 +2,8 @@ import React, { FC, useCallback, useState, useEffect } from "react";
 import Header from "../components/Header";
 import { RouteComponentProps } from 'react-router-dom'
 import Comics from '../api/comics';
-import { makeStyles, Grid, Button } from "@material-ui/core";
+import { makeStyles, Grid, Button, TextField } from "@material-ui/core";
+import Alert from '@material-ui/lab/Alert';
 import { ComicDetailFormat, initComicDetail } from "../type/ComicDetail";
 import ComicAboutTable from "../components/ComicAboutTable";
 import ComicDetailTable from "../components/ComicDetailTable";
@@ -34,16 +35,41 @@ const useStyles = makeStyles((theme) => ({
 const ComicDetail: FC<DetailProps> = ((props)=>{
   const classes = useStyles();
   const comicID = props.match.params.comicID;
+  const comics = new Comics();
   const [comic, setComic] = useState<any>(initComicDetail);
-  const fetch = useCallback(async()=>{
-    const comics = new Comics();
+  const [createNewComicVol, setCreateNewComicVol] = useState(-1);
+  // アラートを表示する（新規コミックVol追加）
+  // 0: アラートなし
+  // 1: 入力がおかしい（空白など）
+  // 2: 登録済み
+  // 3: 成功
+  const [alertResult, setAlertResult] = useState(0);
+  const updateComicDetail = useCallback(async()=>{
     const comicDetail = await comics.getComicDetail(comicID);
     setComic(comicDetail.data.body);
   }, []);
 
   useEffect(()=>{
-    fetch();
+    updateComicDetail();
   }, [fetch]);
+
+  // 現在選択している新規巻数をUpdate
+  const onChangeCreateNewComicVol = (event: any) => {
+    setCreateNewComicVol(event.target.value);
+  }
+
+  // comicVolを追加する
+  const createComicVol = async () => {
+    if(createNewComicVol <= 0) {
+      // アラート：入力異常
+      setAlertResult(1);
+    } else {
+      const comicID = comic.about.id;
+      const res = await comics.createComicVol(comicID, createNewComicVol);
+      console.log(res);
+      updateComicDetail();
+    }
+  }
   
   return (
     <div>
@@ -67,10 +93,22 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
             detail={comic.detail}
           />
         </Grid>
+        <Grid item xs={12} className={classes.paperArea}>
+          <TextField id="add-vol" label="追加する巻数" value={createNewComicVol} onChange={onChangeCreateNewComicVol} />
+          <Button size="large" variant="contained" color="primary" onClick={createComicVol}>
+            新規巻数追加
+          </Button>
+          {/** アラート表示 */}
+          { (alertResult === 1) &&
+            <Alert severity="error">
+              This is an error alert — check it out!
+            </Alert>
+          }
+        </Grid>
         <Grid item xs={12}>
-        <Button size="large" variant="contained" color="primary">
-          漫画既読登録
-        </Button>
+          <Button size="large" variant="contained" color="primary">
+            漫画既読登録
+          </Button>
         </Grid>
       </Grid>
     </div>

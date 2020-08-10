@@ -38,9 +38,9 @@ const ComicDetailTable: FC<Props> = ((props)=>{
               return (
                 <TableRow key={id}>
                   <TableCell>{detail.number}</TableCell>
-                  <TableCell>{detail.info.buyDate}</TableCell>
-                  <TableCell>{detail.info.readDate}</TableCell>
-                  <TableCell>{detail.info.comment}</TableCell>
+                  <TableCell>{detail.info? detail.info.buyDate: 'No Data'}</TableCell>
+                  <TableCell>{detail.info? detail.info.readDate: 'No Data'}</TableCell>
+                  <TableCell>{detail.info? detail.info.comment: 'No Data'}</TableCell>
                 </TableRow>
               )
             })

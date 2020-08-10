@@ -40,8 +40,8 @@ const CreateComicInfo: FC<any> = ((props)=>{
     if(comicID) {
       const comics = new Comics();
       const comicDetail = await comics.getComicDetail(comicID);
-      console.log(comicDetail.data.body);
       setComic(comicDetail.data.body);
+      console.log(comic);
     }
   }, []);
 
