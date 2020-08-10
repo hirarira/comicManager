@@ -2,7 +2,7 @@ import React, { FC, useCallback, useState, useEffect } from "react";
 import Header from "../components/Header";
 import { RouteComponentProps } from 'react-router-dom'
 import Comics from '../api/comics';
-import { makeStyles, Grid } from "@material-ui/core";
+import { makeStyles, Grid, Button } from "@material-ui/core";
 import { ComicDetailFormat, initComicDetail } from "../type/ComicDetail";
 import ComicAboutTable from "../components/ComicAboutTable";
 import ComicDetailTable from "../components/ComicDetailTable";
@@ -66,6 +66,11 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
           <ComicDetailTable
             detail={comic.detail}
           />
+        </Grid>
+        <Grid item xs={12}>
+        <Button size="large" variant="contained" color="primary">
+          漫画既読登録
+        </Button>
         </Grid>
       </Grid>
     </div>
