@@ -1,6 +1,7 @@
 "use strict";
 const Express = require("express");
 const app = Express();
+const cors = require('cors');
 const BodyParser = require('body-parser');
 
 const DBSetting = require('./model/dbSetting.js');
@@ -18,6 +19,8 @@ const comic = new Comic(dbsettings);
 const comicVol = new ComicVol(dbsettings);
 const comicVolInfo = new ComicVolInfo(dbsettings);
 const comicReview = new ComicReview(dbsettings);
+
+app.use(cors());
 
 // urlencodedとjsonは別々に初期化する
 app.use(BodyParser.urlencoded({
