@@ -1,9 +1,8 @@
 import React, { FC, useCallback, useState, useEffect } from "react";
 import Header from "../components/Header";
-import { RouteComponentProps } from 'react-router-dom'
 import Comics from '../api/comics';
 import { makeStyles, Grid, Button } from "@material-ui/core";
-import { ComicDetailFormat, initComicDetail } from "../type/ComicDetail";
+import { initComicDetail } from "../type/ComicDetail";
 import qs from 'query-string';
 
 const useStyles = makeStyles(() => ({

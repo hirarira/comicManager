@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import Comics from '../api/comics';
 import { makeStyles, Grid, Button, TextField } from "@material-ui/core";
 import Alert from '@material-ui/lab/Alert';
-import { ComicDetailFormat, initComicDetail } from "../type/ComicDetail";
+import { initComicDetail } from "../type/ComicDetail";
 import ComicAboutTable from "../components/ComicAboutTable";
 import ComicDetailTable from "../components/ComicDetailTable";
 
@@ -65,9 +65,16 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
       setAlertResult(1);
     } else {
       const comicID = comic.about.id;
-      const res = await comics.createComicVol(comicID, createNewComicVol);
-      console.log(res);
-      updateComicDetail();
+      try {
+        const res = await comics.createComicVol(comicID, createNewComicVol);
+        console.log(res);
+        setAlertResult(3);
+        updateComicDetail();
+      } catch(e) {
+        console.log(e.response.data);
+        // アラート：すでに登録済み
+        setAlertResult(2);
+      }
     }
   }
   
@@ -101,7 +108,17 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
           {/** アラート表示 */}
           { (alertResult === 1) &&
             <Alert severity="error">
-              This is an error alert — check it out!
+              入力値は1以上の数値を入れてください
+            </Alert>
+          }
+          { (alertResult === 2) &&
+            <Alert severity="error">
+              すでに登録済みです
+            </Alert>
+          }
+          { (alertResult === 3) &&
+            <Alert severity="success">
+              登録完了です。追加した巻数: {createNewComicVol}
             </Alert>
           }
         </Grid>
