@@ -67,6 +67,7 @@ app.get("/get/user/:userid", async (req, res)=>{
       'message': '',
       'body': e.message
     }
+    res = res.status(400);
   }
   res = addCommonHeader(res);
   res.send(resBody);
@@ -87,6 +88,7 @@ app.get("/get/authors", async (req, res)=>{
       'message': '',
       'body': e.message
     }
+    res = res.status(400);
   }
   res = addCommonHeader(res);
   res.send(resBody);
@@ -110,6 +112,7 @@ app.post("/create/author", async (req, res)=>{
       'message': '',
       'body': e.message
     }
+    res = res.status(400);
   }
   res = addCommonHeader(res);
   res.send(resBody);
@@ -144,6 +147,7 @@ app.get("/get/comic/:comicID", async (req, res)=>{
       'message': '',
       'body': e.message
     }
+    res = res.status(400);
   }
   res = addCommonHeader(res);
   res.send(resBody);
@@ -164,6 +168,7 @@ app.get("/get/comicList", async (req, res)=>{
       'message': '',
       'body': e.message
     }
+    res = res.status(400);
   }
   res = addCommonHeader(res);
   res.send(resBody);
@@ -188,6 +193,7 @@ app.post("/create/comic", async (req, res)=>{
       'message': '',
       'body': e.message
     }
+    res = res.status(400);
   }
   res = addCommonHeader(res);
   res.send(resBody);
@@ -214,6 +220,7 @@ app.post("/update/comic", async (req, res)=>{
       'message': '',
       'body': e.message
     }
+    res = res.status(400);
   }
   res = addCommonHeader(res);
   res.send(resBody);
@@ -241,6 +248,7 @@ app.post("/create/comicVol", async (req, res)=>{
       'message': '',
       'body': e.message
     }
+    res = res.status(400);
   }
   res = addCommonHeader(res);
   res.send(resBody);
