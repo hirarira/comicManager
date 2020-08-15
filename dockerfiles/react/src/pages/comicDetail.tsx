@@ -2,7 +2,7 @@ import React, { FC, useCallback, useState, useEffect } from "react";
 import Header from "../components/Header";
 import { RouteComponentProps } from 'react-router-dom'
 import Comics from '../api/comics';
-import { makeStyles, Grid, Button, TextField } from "@material-ui/core";
+import { makeStyles, Grid, Button, TextField, Select, MenuItem, FormControl, Link } from "@material-ui/core";
 import Alert from '@material-ui/lab/Alert';
 import { initComicDetail } from "../type/ComicDetail";
 import ComicAboutTable from "../components/ComicAboutTable";
@@ -38,6 +38,7 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
   const comics = new Comics();
   const [comic, setComic] = useState<any>(initComicDetail);
   const [createNewComicVol, setCreateNewComicVol] = useState(-1);
+  const [selectUpdateComicVol, setSelectUpdateComicVol] = useState(1);
   // アラートを表示する（新規コミックVol追加）
   // 0: アラートなし
   // 1: 入力がおかしい（空白など）
@@ -123,9 +124,27 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
           }
         </Grid>
         <Grid item xs={12}>
-          <Button size="large" variant="contained" color="primary">
-            漫画既読登録
-          </Button>
+          <FormControl>
+            <Select
+              id="updateComicVolID"
+              value={selectUpdateComicVol}
+              onChange={(e: any)=>{ setSelectUpdateComicVol(e.target.value) }}
+            >
+              {
+                comic.detail.map((detail: any, id: number)=>{
+                  return (
+                    <MenuItem key={id} value={detail.number}>{detail.number}</MenuItem>
+                  )
+                })
+              }
+            </Select>
+            {console.log(comicID)}
+            <Link href={`/createComicInfo/${comicID}/${selectUpdateComicVol}/`}>
+              <Button size="large" variant="contained" color="primary">
+                漫画既読登録
+              </Button>
+            </Link>
+          </FormControl>
         </Grid>
       </Grid>
     </div>

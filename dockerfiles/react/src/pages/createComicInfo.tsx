@@ -3,7 +3,6 @@ import Header from "../components/Header";
 import Comics from '../api/comics';
 import { makeStyles, Grid, Button } from "@material-ui/core";
 import { initComicDetail } from "../type/ComicDetail";
-import qs from 'query-string';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -25,22 +24,32 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
+/**
+ * コミック各話の話数登録を行う
+ * 読んだ話数の既読登録・コメント入力など
+ */
 const CreateComicInfo: FC<any> = ((props)=>{
+  /* クエリから値を取得する場合
   const queryStr = props.location.search;
   const query = qs.parse(queryStr);
+  */
+  const params = props.match.params;
+  console.log(params);
   const classes = useStyles();
 
   const [comic, setComic] = useState<any>(initComicDetail);
   const [isShowPage, setIsShowPage] = useState(false);
   const fetch = useCallback(async()=>{
     // queryにcomicIDがないとエラーにする
-    const comicID: string = typeof query.comicID === "string"? query.comicID: '';
-    setIsShowPage(comicID !== '');
+    // const comicID: string = typeof query.comicID === "string"? query.comicID: '';
+    const comicID = params.comicID;
+    const volID = params.volID;
+    setIsShowPage(comicID && volID);
     if(comicID) {
       const comics = new Comics();
       const comicDetail = await comics.getComicDetail(comicID);
       setComic(comicDetail.data.body);
-      console.log(comic);
+      console.log(comicDetail);
     }
   }, []);
 

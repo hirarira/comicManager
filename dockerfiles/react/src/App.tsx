@@ -12,7 +12,7 @@ const App = () => {
         <Route exact path="/" component={Home} />
         <Route exact path="/sample" component={Sample} />
         <Route exact path="/detail/:comicID" component={ComicDetail} />
-        <Route exact path="/createComicInfo" component={createComicInfo} />
+        <Route exact path="/createComicInfo/:comicID/:volID" component={createComicInfo} />
       </Switch>
     </React.Fragment>
   )
