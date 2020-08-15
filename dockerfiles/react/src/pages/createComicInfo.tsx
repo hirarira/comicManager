@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Comics from '../api/comics';
 import { makeStyles, Grid, Button } from "@material-ui/core";
 import { initComicDetail } from "../type/ComicDetail";
+import ComicAboutTable from "../components/ComicAboutTable";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -62,8 +63,18 @@ const CreateComicInfo: FC<any> = ((props)=>{
       <Header/>
       {isShowPage &&
         <Grid container justify="center" className={classes.root}>
+          <Grid item xs={6}>
+            <ComicAboutTable
+              title={comic.about.title}
+              endFlag={comic.about.endFlag}
+              author={comic.author.name}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            書影
+          </Grid>
           <Grid item xs={12}>
-            <p className={classes.subtitle}>漫画各話・既読登録</p>
+            <p className={classes.subtitle}>漫画既読・コメント登録</p>
           </Grid>
           <Grid item xs={12}>
             <Button size="large" variant="contained" color="primary">
