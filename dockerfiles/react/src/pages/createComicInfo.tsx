@@ -43,6 +43,10 @@ const CreateComicInfo: FC<any> = ((props)=>{
   const [comicDetail, setComicDetail] = useState<any>(null);
   const [isShowPage, setIsShowPage] = useState(false);
   const [buyFlag, setBuyFlag] = useState<string>("");
+  const [buyDate, setBuyDate] = useState<Date>(new Date(0));
+  const [readFlag, setReadFlag] = useState<string>("");
+  const [readDate, setReadDate] = useState<Date>(new Date(0));
+  
   const fetch = useCallback(async()=>{
     // queryにcomicIDがないとエラーにする
     // const comicID: string = typeof query.comicID === "string"? query.comicID: '';
@@ -60,6 +64,9 @@ const CreateComicInfo: FC<any> = ((props)=>{
       if(detail) {
         setComicDetail(detail);
         setBuyFlag(detail.info.buyFlag);
+        setBuyDate(detail.info.buyDate);
+        setReadFlag(detail.info.readFlag);
+        setReadDate(detail.info.readDate);
       } else {
         setComicDetail(null);
       }
@@ -68,6 +75,10 @@ const CreateComicInfo: FC<any> = ((props)=>{
 
   const submitRegistVol = () => {
     console.log(buyFlag);
+    console.log(buyDate);
+    console.log(readFlag);
+    console.log(readDate);
+    console.log("----");
   }
 
   useEffect(()=>{
@@ -93,7 +104,6 @@ const CreateComicInfo: FC<any> = ((props)=>{
             <p className={classes.subtitle}>漫画既読・コメント登録</p>
           </Grid>
           <Grid item xs={12}>
-            <FormControl>
               <TableContainer component={Paper} className={classes.table}>
                 <Table>
                   <TableBody>
@@ -108,18 +118,28 @@ const CreateComicInfo: FC<any> = ((props)=>{
                           value={buyFlag}
                           onChange={(x)=>{ setBuyFlag(String(x.target.value)) }}
                         >
-                          <MenuItem value={"true"}>True</MenuItem>
-                          <MenuItem value={"false"}>False</MenuItem>
+                          <MenuItem value="true">True</MenuItem>
+                          <MenuItem value="false">False</MenuItem>
                         </Select>
                       </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>購入日</TableCell>
-                      <TableCell>{comicDetail.info.buyDate}</TableCell>
+                      <TableCell>
+
+                      </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>読破フラグ</TableCell>
-                      <TableCell>{String(comicDetail.info.readFlag)}</TableCell>
+                      <TableCell>
+                        <Select
+                          value={readFlag}
+                          onChange={(x)=>{ setReadFlag(String(x.target.value)) }}
+                        >
+                          <MenuItem value="true">True</MenuItem>
+                          <MenuItem value="false">False</MenuItem>
+                        </Select>
+                      </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>読破日</TableCell>
@@ -132,7 +152,6 @@ const CreateComicInfo: FC<any> = ((props)=>{
                   </TableBody>
                 </Table>
               </TableContainer>
-            </FormControl>
           </Grid>
           <Grid item xs={12}>
             <Button size="large" variant="contained" color="primary" onClick={ submitRegistVol }>
