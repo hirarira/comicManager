@@ -68,12 +68,12 @@ const CreateComicInfo: FC<any> = ((props)=>{
       if(detail) {
         setComicDetail(detail);
         if(detail.info) {
-          setBuyFlag(detail.info.buyFlag);
-          if(detail.info.buyFlag == "true") {
+          setBuyFlag(detail.info.buyFlag.toString());
+          if(detail.info.buyFlag) {
             setBuyDate(new Date(detail.info.buyDate*1000));
           }
-          setReadFlag(detail.info.readFlag);
-          if (detail.info.readFlag == "true") {
+          setReadFlag(detail.info.readFlag.toString());
+          if (detail.info.readFlag) {
             setReadDate(new Date(detail.info.readDate*1000));
           }
           setCommnet(detail.info.comment);
