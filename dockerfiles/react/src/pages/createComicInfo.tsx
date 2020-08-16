@@ -1,9 +1,10 @@
 import React, { FC, useCallback, useState, useEffect } from "react";
 import Header from "../components/Header";
 import Comics from '../api/comics';
-import { makeStyles, Grid, Button, TableContainer, Table, TableBody, TableRow, TableCell, Paper, FormControl, Select, MenuItem } from "@material-ui/core";
+import { makeStyles, Grid, Button, TableContainer, Table, TableBody, TableRow, TableCell, Paper, FormControl, Select, MenuItem, TextField } from "@material-ui/core";
 import { initComicDetail } from "../type/ComicDetail";
 import ComicAboutTable from "../components/ComicAboutTable";
+import { format } from "date-fns";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -43,9 +44,9 @@ const CreateComicInfo: FC<any> = ((props)=>{
   const [comicDetail, setComicDetail] = useState<any>(null);
   const [isShowPage, setIsShowPage] = useState(false);
   const [buyFlag, setBuyFlag] = useState<string>("");
-  const [buyDate, setBuyDate] = useState<Date>(new Date(0));
+  const [buyDate, setBuyDate] = useState<Date>(new Date());
   const [readFlag, setReadFlag] = useState<string>("");
-  const [readDate, setReadDate] = useState<Date>(new Date(0));
+  const [readDate, setReadDate] = useState<Date>(new Date());
   
   const fetch = useCallback(async()=>{
     // queryにcomicIDがないとエラーにする
@@ -64,16 +65,20 @@ const CreateComicInfo: FC<any> = ((props)=>{
       if(detail) {
         setComicDetail(detail);
         setBuyFlag(detail.info.buyFlag);
-        setBuyDate(detail.info.buyDate);
+        if(detail.info.buyDate) {
+          setBuyDate(detail.info.buyDate);
+        }
         setReadFlag(detail.info.readFlag);
-        setReadDate(detail.info.readDate);
+        if (detail.info.readDate) {
+          setReadDate(detail.info.readDate);
+        }
       } else {
         setComicDetail(null);
       }
     }
   }, []);
 
-  const submitRegistVol = () => {
+  const submitRegistVol = async () => {
     console.log(buyFlag);
     console.log(buyDate);
     console.log(readFlag);
@@ -126,7 +131,11 @@ const CreateComicInfo: FC<any> = ((props)=>{
                     <TableRow>
                       <TableCell>購入日</TableCell>
                       <TableCell>
-
+                        <TextField
+                          type="date"
+                          value={format(buyDate, "yyyy-MM-dd")}
+                          onChange={ (e)=>{ setBuyDate(new Date(e.target.value)) } }
+                        />
                       </TableCell>
                     </TableRow>
                     <TableRow>
@@ -143,7 +152,13 @@ const CreateComicInfo: FC<any> = ((props)=>{
                     </TableRow>
                     <TableRow>
                       <TableCell>読破日</TableCell>
-                      <TableCell>{comicDetail.info.readDate}</TableCell>
+                      <TableCell>
+                        <TextField
+                          type="date"
+                          value={format(readDate, "yyyy-MM-dd")}
+                          onChange={ (e)=>{ setReadDate(new Date(e.target.value)) } }
+                        />
+                      </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>コメント</TableCell>
