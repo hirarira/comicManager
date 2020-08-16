@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { Paper, TableRow, TableCell, TableBody, Table, TableContainer, makeStyles, TableHead } from "@material-ui/core";
+import { format } from "date-fns";
 
 interface Props {
   detail: [any],
@@ -21,6 +22,28 @@ const useStyles = makeStyles((theme) => ({
 
 const ComicDetailTable: FC<Props> = ((props)=>{
   const classes = useStyles();
+  const showBuyDate = (info: any) => {
+    if(info) {
+      if(info.buyFlag) {
+        return format(new Date(info.buyDate*1000), "yyyy-MM-dd");
+      } else {
+        return '未購入';
+      }
+    } else {
+      return 'No Data';
+    }
+  }
+  const showReadDate = (info: any) => {
+    if(info) {
+      if(info.readFlag) {
+        return format(new Date(info.readDate*1000), "yyyy-MM-dd");
+      } else {
+        return '未購入';
+      }
+    } else {
+      return 'No Data';
+    }
+  }
   return (
     <TableContainer component={Paper} className={classes.table}>
       <Table>
@@ -38,8 +61,8 @@ const ComicDetailTable: FC<Props> = ((props)=>{
               return (
                 <TableRow key={id}>
                   <TableCell>{detail.number}</TableCell>
-                  <TableCell>{detail.info? detail.info.buyDate: 'No Data'}</TableCell>
-                  <TableCell>{detail.info? detail.info.readDate: 'No Data'}</TableCell>
+                  <TableCell>{showBuyDate(detail.info)}</TableCell>
+                  <TableCell>{showReadDate(detail.info)}</TableCell>
                   <TableCell>{detail.info? detail.info.comment: 'No Data'}</TableCell>
                 </TableRow>
               )
