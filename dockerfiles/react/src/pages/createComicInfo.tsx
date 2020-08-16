@@ -39,6 +39,7 @@ const CreateComicInfo: FC<any> = ((props)=>{
   */
   const params = props.match.params;
   const classes = useStyles();
+  const comics = new Comics();
 
   const [comic, setComic] = useState<any>(initComicDetail);
   const [comicDetail, setComicDetail] = useState<any>(null);
@@ -47,6 +48,8 @@ const CreateComicInfo: FC<any> = ((props)=>{
   const [buyDate, setBuyDate] = useState<Date>(new Date());
   const [readFlag, setReadFlag] = useState<string>("");
   const [readDate, setReadDate] = useState<Date>(new Date());
+  const [comment, setCommnet] = useState<string>("");
+  const [createResult, setCreateResult] = useState<string>("");
   
   const fetch = useCallback(async()=>{
     // queryにcomicIDがないとエラーにする
@@ -66,24 +69,39 @@ const CreateComicInfo: FC<any> = ((props)=>{
         setComicDetail(detail);
         setBuyFlag(detail.info.buyFlag);
         if(detail.info.buyDate) {
-          setBuyDate(detail.info.buyDate);
+          setBuyDate(new Date(detail.info.buyDate*1000));
         }
         setReadFlag(detail.info.readFlag);
         if (detail.info.readDate) {
-          setReadDate(detail.info.readDate);
+          setReadDate(new Date(detail.info.readDate*1000));
         }
+        setCommnet(detail.info.comment);
       } else {
         setComicDetail(null);
       }
     }
   }, []);
 
+  // APIに読んだ漫画の情報を更新・登録
   const submitRegistVol = async () => {
-    console.log(buyFlag);
-    console.log(buyDate);
-    console.log(readFlag);
-    console.log(readDate);
+    const userID = 1;
+    const params = {
+      comicVolID: comicDetail.info.comicVolID,
+      userID: userID,
+      readFlag: readFlag,
+      readDate: Math.floor(readDate.getTime()/1000),
+      buyFlag: buyFlag,
+      buyDate: Math.floor(buyDate.getTime()/1000),
+      comment: comment
+    }
+    console.log(params);
     console.log("----");
+    // 新規登録を試みる
+    let res = await comics.createComicVolInfo(params);
+    if(res.data.status == 'ng') {
+      res = await comics.updateComicVolInfo(params);
+      setCreateResult(res.data.message);
+    }
   }
 
   useEffect(()=>{
@@ -162,7 +180,12 @@ const CreateComicInfo: FC<any> = ((props)=>{
                     </TableRow>
                     <TableRow>
                       <TableCell>コメント</TableCell>
-                      <TableCell>{comicDetail.info.comment}</TableCell>
+                      <TableCell>
+                        <TextField
+                          value={comment}
+                          onChange={ (e)=>{ setCommnet(e.target.value) } }
+                        />
+                      </TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>

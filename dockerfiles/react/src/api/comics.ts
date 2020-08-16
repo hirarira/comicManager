@@ -20,6 +20,14 @@ class Comics {
       number: String(number)
     });
   }
+  async createComicVolInfo(params: object) {
+    const url = `${this.host}/create/comicVolInfo`;
+    return await axios.post(url, params);
+  }
+  async updateComicVolInfo(params: object) {
+    const url = `${this.host}/update/comicVolInfo`;
+    return await axios.post(url, params);
+  }
 }
 
 export default Comics;
