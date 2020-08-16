@@ -44,9 +44,9 @@ const CreateComicInfo: FC<any> = ((props)=>{
   const [comic, setComic] = useState<any>(initComicDetail);
   const [comicDetail, setComicDetail] = useState<any>(null);
   const [isShowPage, setIsShowPage] = useState(false);
-  const [buyFlag, setBuyFlag] = useState<string>("");
+  const [buyFlag, setBuyFlag] = useState<string>("false");
   const [buyDate, setBuyDate] = useState<Date>(new Date());
-  const [readFlag, setReadFlag] = useState<string>("");
+  const [readFlag, setReadFlag] = useState<string>("false");
   const [readDate, setReadDate] = useState<Date>(new Date());
   const [comment, setCommnet] = useState<string>("");
   const [createResult, setCreateResult] = useState<string>("");
@@ -67,15 +67,17 @@ const CreateComicInfo: FC<any> = ((props)=>{
       console.log(detail);
       if(detail) {
         setComicDetail(detail);
-        setBuyFlag(detail.info.buyFlag);
-        if(detail.info.buyDate) {
-          setBuyDate(new Date(detail.info.buyDate*1000));
+        if(detail.info) {
+          setBuyFlag(detail.info.buyFlag);
+          if(detail.info.buyDate) {
+            setBuyDate(new Date(detail.info.buyDate*1000));
+          }
+          setReadFlag(detail.info.readFlag);
+          if (detail.info.readDate) {
+            setReadDate(new Date(detail.info.readDate*1000));
+          }
+          setCommnet(detail.info.comment);
         }
-        setReadFlag(detail.info.readFlag);
-        if (detail.info.readDate) {
-          setReadDate(new Date(detail.info.readDate*1000));
-        }
-        setCommnet(detail.info.comment);
       } else {
         setComicDetail(null);
       }
@@ -86,7 +88,7 @@ const CreateComicInfo: FC<any> = ((props)=>{
   const submitRegistVol = async () => {
     const userID = 1;
     const params = {
-      comicVolID: comicDetail.info.comicVolID,
+      comicVolID: comicDetail.id,
       userID: userID,
       readFlag: readFlag,
       readDate: Math.floor(readDate.getTime()/1000),
@@ -100,8 +102,8 @@ const CreateComicInfo: FC<any> = ((props)=>{
     let res = await comics.createComicVolInfo(params);
     if(res.data.status == 'ng') {
       res = await comics.updateComicVolInfo(params);
-      setCreateResult(res.data.message);
     }
+    setCreateResult(res.data.message);
   }
 
   useEffect(()=>{
