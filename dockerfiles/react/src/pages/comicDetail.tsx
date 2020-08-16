@@ -2,7 +2,7 @@ import React, { FC, useCallback, useState, useEffect } from "react";
 import Header from "../components/Header";
 import { RouteComponentProps } from 'react-router-dom'
 import Comics from '../api/comics';
-import { makeStyles, Grid, Button, TextField, Select, MenuItem, FormControl, Link } from "@material-ui/core";
+import { makeStyles, Grid, Button, TextField, Select, MenuItem, FormControl, Link, InputLabel } from "@material-ui/core";
 import Alert from '@material-ui/lab/Alert';
 import { initComicDetail } from "../type/ComicDetail";
 import ComicAboutTable from "../components/ComicAboutTable";
@@ -29,6 +29,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '1rem',
     fontSize: '1.5rem',
     color: '#778899'
+  },
+  formArea: {
+    marginRight: '20px',
+    width: '100px'
   }
 }));
 
@@ -102,7 +106,7 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
           />
         </Grid>
         <Grid item xs={12} className={classes.paperArea}>
-          <TextField id="add-vol" label="追加する巻数" value={createNewComicVol} onChange={onChangeCreateNewComicVol} />
+          <TextField id="add-vol" label="追加する巻数" value={createNewComicVol} onChange={onChangeCreateNewComicVol} className={classes.formArea} />
           <Button size="large" variant="contained" color="primary" onClick={createComicVol}>
             新規巻数追加
           </Button>
@@ -125,10 +129,12 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
         </Grid>
         <Grid item xs={12}>
           <FormControl>
+            <InputLabel>編集する巻数</InputLabel>
             <Select
               id="updateComicVolID"
               value={selectUpdateComicVol}
               onChange={(e: any)=>{ setSelectUpdateComicVol(e.target.value) }}
+              className={classes.formArea}
             >
               {
                 comic.detail.map((detail: any, id: number)=>{
@@ -138,13 +144,12 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
                 })
               }
             </Select>
-            {console.log(comicID)}
-            <Link href={`/createComicInfo/${comicID}/${selectUpdateComicVol}/`}>
-              <Button size="large" variant="contained" color="primary">
-                漫画既読登録
-              </Button>
-            </Link>
           </FormControl>
+          <Link href={`/createComicInfo/${comicID}/${selectUpdateComicVol}/`}>
+            <Button size="large" variant="contained" color="primary">
+              漫画既読登録
+            </Button>
+          </Link>
         </Grid>
       </Grid>
     </div>
