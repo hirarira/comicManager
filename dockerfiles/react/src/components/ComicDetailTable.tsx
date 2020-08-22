@@ -16,7 +16,12 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "640px"
   },
   minRow: {
-    minWidth: "50px"
+    minWidth: "50px",
+    paddingLeft: "5px",
+    paddingRight: "5px"
+  },
+  comment: {
+    minWidth: "200px",
   }
 }));
 
@@ -52,7 +57,7 @@ const ComicDetailTable: FC<Props> = ((props)=>{
             <TableCell className={classes.minRow}>巻数</TableCell>
             <TableCell className={classes.minRow}>購入日</TableCell>
             <TableCell className={classes.minRow}>読破日</TableCell>
-            <TableCell>コメント</TableCell>
+            <TableCell className={classes.comment}>コメント</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
