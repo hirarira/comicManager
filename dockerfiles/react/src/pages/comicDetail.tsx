@@ -56,6 +56,7 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
   }, []);
 
   useEffect(()=>{
+    document.title = '漫画管理アプリ: 漫画概要';
     updateComicDetail();
   }, [fetch]);
 

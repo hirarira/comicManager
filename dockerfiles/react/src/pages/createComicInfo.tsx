@@ -107,6 +107,7 @@ const CreateComicInfo: FC<any> = ((props)=>{
   }
 
   useEffect(()=>{
+    document.title = '漫画管理アプリ: 各話詳細';
     fetch();
   }, [fetch]);
 
