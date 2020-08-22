@@ -5,6 +5,7 @@ import { makeStyles, Grid, Button, TableContainer, Table, TableBody, TableRow, T
 import { initComicDetail } from "../type/ComicDetail";
 import ComicAboutTable from "../components/ComicAboutTable";
 import { format } from "date-fns";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -96,14 +97,13 @@ const CreateComicInfo: FC<any> = ((props)=>{
       buyDate: Math.floor(buyDate.getTime()/1000),
       comment: comment
     }
-    console.log(params);
-    console.log("----");
     // 新規登録を試みる
     let res = await comics.createComicVolInfo(params);
     if(res.data.status == 'ng') {
       res = await comics.updateComicVolInfo(params);
     }
-    setCreateResult(res.data.message);
+    const resBody = res.data.status === 'ok'? res.data.status: res.data.message;
+    setCreateResult(resBody);
   }
 
   useEffect(()=>{
@@ -197,6 +197,16 @@ const CreateComicInfo: FC<any> = ((props)=>{
             <Button size="large" variant="contained" color="primary" onClick={ submitRegistVol }>
               漫画既読登録
             </Button>
+            { createResult === 'ok' &&
+              <Alert severity="success">
+                登録完了です。
+              </Alert>
+            }
+            { createResult && createResult !== 'ok' &&
+              <Alert severity="error">
+                {createResult}
+              </Alert>
+            }
           </Grid>
         </Grid>
       }
