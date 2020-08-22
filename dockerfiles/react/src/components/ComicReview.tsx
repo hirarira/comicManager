@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { Paper, TableRow, TableCell, TableBody, Table, TableContainer, makeStyles } from "@material-ui/core";
+import React, { FC, useState, useEffect } from "react";
+import { Paper, TableRow, TableCell, TableBody, Table, TableContainer, makeStyles, Slider, TextField } from "@material-ui/core";
 
 interface Review {
   id: number,
@@ -21,11 +21,20 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "20px",
     width: "90%",
     maxWidth: "640px"
+  },
+  textFiled: {
+    width: "100%"
   }
 }));
 
 const ComicReview: FC<Props> = ((props)=>{
+  const [rate, setRate] = useState(props.review.rate);
+  const [comment, setComment] = useState(props.review.comment);
   const classes = useStyles();
+  useEffect(()=>{
+    setRate(Number(props.review.rate));
+    setComment(props.review.comment);
+  }, [props]);
   return (
     <TableContainer component={Paper} className={classes.table}>
       <Table>
@@ -51,7 +60,12 @@ const ComicReview: FC<Props> = ((props)=>{
               評価編集
             </TableCell>
             <TableCell>
-              {props.review.rate}
+              <Slider
+                value={rate}
+                onChange={(e, value)=>{ setRate(Number(value)) }}
+                aria-labelledby="discrete-slider-always"
+                valueLabelDisplay="on"
+              />
             </TableCell>
           </TableRow>
           <TableRow>
@@ -59,7 +73,13 @@ const ComicReview: FC<Props> = ((props)=>{
               コメント編集
             </TableCell>
             <TableCell>
-              {props.review.comment}
+              <TextField
+                className={classes.textFiled}
+                value={comment}
+                multiline
+                rows={4}
+                onChange={ (e)=>{ setComment(e.target.value) } }
+              />
             </TableCell>
           </TableRow>
         </TableBody>
