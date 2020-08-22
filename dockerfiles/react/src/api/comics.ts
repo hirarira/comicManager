@@ -28,6 +28,14 @@ class Comics {
     const url = `${this.host}/update/comicVolInfo`;
     return await axios.post(url, params);
   }
+  async createComicReview(params: object) {
+    const url = `${this.host}/create/comicReview`;
+    return await axios.post(url, params);
+  }
+  async updateComicReview(params: object) {
+    const url = `${this.host}/update/comicReview`;
+    return await axios.post(url, params);
+  }
 }
 
 export default Comics;
