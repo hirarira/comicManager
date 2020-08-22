@@ -3,7 +3,7 @@ import axios from 'axios';
 class Comics {
   host: string;
   constructor() {
-    this.host = "http://localhost:3333";
+    this.host = "http://localhost:3334";
   }
   async getComicList() {
     const url = this.host + '/get/comicList';
