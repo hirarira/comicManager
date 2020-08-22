@@ -7,6 +7,7 @@ import Alert from '@material-ui/lab/Alert';
 import { initComicDetail } from "../type/ComicDetail";
 import ComicAboutTable from "../components/ComicAboutTable";
 import ComicDetailTable from "../components/ComicDetailTable";
+import ComicReview from "../components/ComicReview";
 
 type DetailProps = RouteComponentProps<{
   comicID: string
@@ -150,6 +151,14 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
               漫画既読登録
             </Button>
           </Link>
+        </Grid>
+        <Grid item xs={12}>
+          <p className={classes.subtitle}>レビュー</p>
+        </Grid>
+        <Grid item xs={12}>
+          <ComicReview
+            review={comic.review}
+          />
         </Grid>
       </Grid>
     </div>
