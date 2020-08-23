@@ -22,9 +22,7 @@ services:
     command: [sh, -c, npm install && npm start]
   react:
     build: ./dockerfiles/react/
-    volumes:
-      - ./dockerfiles/react/:/app
     ports:
-      - 3335:3000
+      - 3335:80
     links:
       - express

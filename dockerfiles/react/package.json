@@ -1,7 +1,8 @@
 {
   "name": "comic-manager",
-  "version": "0.1.0",
+  "version": "0.8.0",
   "private": true,
+  "homepage": "http://v.chashitsu.org:3335/",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
