@@ -26,7 +26,7 @@ class Comics {
   }
   async updateComicVolInfo(params: object) {
     const url = `${this.host}/update/comicVolInfo`;
-    return await axios.post(url, params);
+    return await axios.put(url, params);
   }
   async createComicReview(params: object) {
     const url = `${this.host}/create/comicReview`;
@@ -34,7 +34,7 @@ class Comics {
   }
   async updateComicReview(params: object) {
     const url = `${this.host}/update/comicReview`;
-    return await axios.post(url, params);
+    return await axios.put(url, params);
   }
 }
 
