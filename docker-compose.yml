@@ -20,9 +20,8 @@ services:
     links:
       - mariadb
     command: [sh, -c, npm install && npm start]
-  swagger-ui:
+  swagger:
     image: swaggerapi/swagger-ui
-    container_name: "swagger-ui"
     ports:
       - 3335:8080
     volumes:
@@ -32,6 +31,6 @@ services:
   react:
     build: ./dockerfiles/react/
     ports:
-      - 3336:80
+      - 80:80
     links:
-      - express
+      - express:express

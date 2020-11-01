@@ -9,3 +9,4 @@ RUN npm install npm@latest -g
 RUN npm install
 RUN npm run build
 RUN cp -r ./build/* /usr/share/nginx/html/
+RUN cp ./default.conf /etc/nginx/conf.d/
