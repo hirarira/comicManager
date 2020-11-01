@@ -26,11 +26,9 @@ services:
     ports:
       - 3335:8080
     volumes:
-      - ../dockerfiles/swagger/openapi.yaml:/openapi.yaml
+      - ./dockerfiles/swagger/openapi.yaml:/usr/share/nginx/html/openapi.yaml
     environment:
-      SWAGGER_JSON: /openapi.yaml
-    links:
-      - express
+      API_URL: /openapi.yaml
   react:
     build: ./dockerfiles/react/
     ports:
