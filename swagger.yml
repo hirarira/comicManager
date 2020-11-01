@@ -276,6 +276,42 @@ paths:
           description: "失敗時"
           schema:
             $ref: "#/definitions/ResponseStandard"
+  /create/comicReview:
+    post:
+      summary: "漫画のレビュー情報を作成する"
+      description: "漫画のレビュー情報を作成する"
+      tags:
+        - "create"
+      parameters:
+      - in: "body"
+        name: "body"
+        schema:
+          type: "object"
+          required:
+            - comicID
+            - userID
+          properties:
+            comicID:
+              description: "漫画ID"
+              type: "integer"
+            userID:
+              description: "ユーザID"
+              type: "integer"
+            rate:
+              description: "評価"
+              type: "integer"
+            comment:
+              description: "コメント"
+              type: "string"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+        "400":
+          description: "失敗時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
 definitions:
   ResponseStandard:
     type: "object"
