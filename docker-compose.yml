@@ -11,8 +11,6 @@ services:
       MYSQL_USER: admin
       MYSQL_PASSWORD: mariadb
       MYSQL_ROOT_PASSWORD: mariadb
-    ports:
-      - 3306:3306
   express:
     build: ./dockerfiles/express/
     volumes:
@@ -31,5 +29,11 @@ services:
       - ../dockerfiles/swagger/openapi.yaml:/openapi.yaml
     environment:
       SWAGGER_JSON: /openapi.yaml
+    links:
+      - express
+  react:
+    build: ./dockerfiles/react/
+    ports:
+      - 3336:80
     links:
       - express
