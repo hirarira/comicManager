@@ -22,3 +22,14 @@ services:
     links:
       - mariadb
     command: [sh, -c, npm install && npm start]
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: "swagger-ui"
+    ports:
+      - 3335:8080
+    volumes:
+      - ../dockerfiles/swagger/openapi.yaml:/openapi.yaml
+    environment:
+      SWAGGER_JSON: /openapi.yaml
+    links:
+      - express
