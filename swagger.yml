@@ -171,7 +171,7 @@ paths:
         - application/json
       parameters:
       - in: "body"
-        name: "author"
+        name: "body"
         schema:
           type: "object"
           required:
@@ -185,6 +185,40 @@ paths:
             authorID:
               description: "著者ID"
               type: "integer"
+            image:
+              description: "漫画のサムネURL"
+              type: "string"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+        "400":
+          description: "失敗時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+  /create/comicVol:
+    post:
+      summary: "漫画の各話情報を作成する"
+      description: "漫画の各話情報を作成する"
+      tags:
+        - "create"
+      parameters:
+      - in: "body"
+        name: "body"
+        schema:
+          type: "object"
+          required:
+            - comicID
+            - number
+            - image
+          properties:
+            comicID:
+              description: "漫画ID"
+              type: "integer"
+            number:
+              description: "巻数"
+              type: "string"
             image:
               description: "漫画のサムネURL"
               type: "string"
