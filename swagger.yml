@@ -89,14 +89,7 @@ paths:
               body:
                 type: "array"
                 items:
-                  type: "object"
-                  properties:
-                    id:
-                      type: "integer"
-                      example: "1"
-                    name:
-                      type: "string"
-                      example: "test"
+                  $ref: "#/definitions/ComicAuthor"
   /get/comic/{comicID}:
     get:
       summary: "コミック情報取得"
@@ -127,94 +120,99 @@ paths:
                   - "review"
                   - "detail"
                 properties: 
-                  about: 
-                    required: 
-                      - "id"
-                      - "title"
-                      - "authorID"
-                      - "endFlag"
-                      - "image"
-                    properties: 
-                      id: 
-                        type: "number"
-                      title: 
-                        type: "string"
-                      authorID: 
-                        type: "number"
-                      endFlag: 
-                        type: "boolean"
-                    type: "object"
+                  about:
+                    $ref: "#/definitions/ComicAbout"
                   author: 
-                    required: 
-                      - "id"
-                      - "name"
-                    properties: 
-                      id: 
-                        type: "number"
-                      name: 
-                        type: "string"
-                    type: "object"
+                    $ref: "#/definitions/ComicAuthor"
                   review: 
-                    required: 
-                      - "id"
-                      - "comicID"
-                      - "userID"
-                      - "rate"
-                      - "comment"
-                    properties: 
-                      id: 
-                        type: "number"
-                      comicID: 
-                        type: "number"
-                      userID: 
-                        type: "number"
-                      rate: 
-                        type: "number"
-                      comment: 
-                        type: "string"
-                    type: "object"
+                    $ref: "#/definitions/ComicReview"
                   detail: 
                     type: "array"
-                    items: 
-                      type: "object"
-                      properties: 
-                        id: 
-                          type: "number"
-                        comicID: 
-                          type: "number"
-                        number: 
-                          type: "string"
-                        image: 
-                          type: "string"
-                        info: 
-                          required: 
-                            - "id"
-                            - "comicVolID"
-                            - "userID"
-                            - "readFlag"
-                            - "readDate"
-                            - "buyFlag"
-                            - "buyDate"
-                            - "comment"
-                          properties: 
-                            id: 
-                              type: "number"
-                            comicVolID: 
-                              type: "number"
-                            userID: 
-                              type: "number"
-                            readFlag: 
-                              type: "boolean"
-                            readDate: 
-                              type: "number"
-                            buyFlag: 
-                              type: "boolean"
-                            buyDate: 
-                              type: "number"
-                            comment: 
-                              type: "string"
-                          type: "object"
-                type: "object"
-
-                            
-
+                    items:
+                      $ref: "#/definitions/ComicVol"
+definitions:
+  ComicReview:
+    type: "object"
+    required: 
+      - "id"
+      - "comicID"
+      - "userID"
+      - "rate"
+      - "comment"
+    properties: 
+      id: 
+        type: "number"
+      comicID: 
+        type: "number"
+      userID: 
+        type: "number"
+      rate: 
+        type: "number"
+      comment: 
+        type: "string"
+  ComicAbout:
+      type: "object"
+      required: 
+        - "id"
+        - "title"
+        - "authorID"
+        - "endFlag"
+        - "image"
+      properties: 
+        id: 
+          type: "number"
+        title: 
+          type: "string"
+        authorID: 
+          type: "number"
+        endFlag: 
+          type: "boolean"
+  ComicAuthor:
+    type: "object"
+    required: 
+      - "id"
+      - "name"
+    properties: 
+      id: 
+        type: "number"
+      name: 
+        type: "string"
+  ComicVol:
+    type: "object"
+    properties:
+      id: 
+        type: "number"
+      comicID: 
+        type: "number"
+      number: 
+        type: "string"
+      image: 
+        type: "string"
+      info: 
+        required: 
+          - "id"
+          - "comicVolID"
+          - "userID"
+          - "readFlag"
+          - "readDate"
+          - "buyFlag"
+          - "buyDate"
+          - "comment"
+        properties: 
+          id: 
+            type: "number"
+          comicVolID: 
+            type: "number"
+          userID: 
+            type: "number"
+          readFlag: 
+            type: "boolean"
+          readDate: 
+            type: "number"
+          buyFlag: 
+            type: "boolean"
+          buyDate: 
+            type: "number"
+          comment: 
+            type: "string"
+        type: "object"
