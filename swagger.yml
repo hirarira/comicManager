@@ -312,6 +312,163 @@ paths:
           description: "失敗時"
           schema:
             $ref: "#/definitions/ResponseStandard"
+  /update/comic:
+    post:
+      summary: "漫画情報を更新する"
+      description: "漫画情報を更新する"
+      tags:
+        - "update"
+      consumes:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "body"
+        schema:
+          type: "object"
+          required:
+            - id
+          properties:
+            id:
+              description: "漫画情報ID"
+              type: "integer"
+            title:
+              description: "漫画のタイトル"
+              type: "string"
+            authorID:
+              description: "著者ID"
+              type: "integer"
+            endFlag:
+              description: "完結フラグ"
+              type: "boolean"
+            image:
+              description: "漫画のサムネURL"
+              type: "string"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+        "400":
+          description: "失敗時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+  /update/comicVol:
+     post:
+      summary: "漫画の各話情報を更新する"
+      description: "漫画の各話情報を更新する"
+      tags:
+        - "update"
+      consumes:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "body"
+        schema:
+          type: "object"
+          required:
+            - comicID
+            - number
+          properties:
+            comicID:
+              description: "漫画ID"
+              type: "integer"
+            number:
+              description: "巻数"
+              type: "string"
+            image:
+              description: "漫画のサムネURL"
+              type: "string"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+        "400":
+          description: "失敗時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+  /update/comicVolInfo:
+    post:
+      summary: "漫画の各話レビュー情報を更新する"
+      description: "漫画の各話レビュー情報を更新する"
+      tags:
+        - "update"
+      parameters:
+      - in: "body"
+        name: "body"
+        schema:
+          type: "object"
+          required:
+            - comicVolID
+            - userID
+          properties:
+            comicVolID:
+              description: "漫画各話ID"
+              type: "integer"
+            userID:
+              description: "ユーザID"
+              type: "integer"
+            readFlag:
+              description: "既読フラグ"
+              type: "boolean"
+            readDate:
+              description: "読破日時(UNIX TIME)"
+              type: "integer"
+            buyFlag:
+              description: "購入フラグ"
+              type: "boolean"
+            buyDate:
+              description: "購入日時(UNIX TIME)"
+              type: "integer"
+            comment:
+              description: "コメント"
+              type: "string"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+        "400":
+          description: "失敗時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+  /update/comicReview:
+    post:
+      summary: "漫画のレビュー情報を更新する"
+      description: "漫画のレビュー情報を更新する"
+      tags:
+        - "update"
+      parameters:
+      - in: "body"
+        name: "body"
+        schema:
+          type: "object"
+          required:
+            - comicID
+            - userID
+          properties:
+            comicID:
+              description: "漫画ID"
+              type: "integer"
+            userID:
+              description: "ユーザID"
+              type: "integer"
+            rate:
+              description: "評価"
+              type: "integer"
+            comment:
+              description: "コメント"
+              type: "string"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+        "400":
+          description: "失敗時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+
 definitions:
   ResponseStandard:
     type: "object"
