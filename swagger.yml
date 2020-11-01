@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: "Use ComicManager.<br>https://github.com/hirarira/comicManager"
+  description: "漫画管理アプリで使用するAPI<br>Express.jsにて作動しています。<br>https://github.com/hirarira/comicManager"
   version: "0.7.0"
   title: "comicManager Express API"
   license:
@@ -147,10 +147,46 @@ paths:
         schema:
           type: "object"
           required:
-            - authorName
+            - name
           properties:
             name:
               description: "著者の名前"
+              type: "string"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+        "400":
+          description: "失敗時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+  /create/comic:
+    post:
+      summary: "漫画情報を作成する"
+      description: "漫画情報を作成する"
+      tags:
+        - "create"
+      consumes:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "author"
+        schema:
+          type: "object"
+          required:
+            - title
+            - authorID
+            - image
+          properties:
+            title:
+              description: "漫画のタイトル"
+              type: "string"
+            authorID:
+              description: "著者ID"
+              type: "integer"
+            image:
+              description: "漫画のサムネURL"
               type: "string"
       responses:
         "200":
