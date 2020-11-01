@@ -97,5 +97,124 @@ paths:
                     name:
                       type: "string"
                       example: "test"
-                  
+  /get/comic/{comicID}:
+    get:
+      summary: "コミック情報取得"
+      description: "コミックの情報を返します"
+      tags:
+        - "get"
+      parameters:
+      - name: "comicID"
+        in: "path"
+        description: "取得したいコミックのID"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            type: "object"
+            properties:
+              status: 
+                type: "string"
+              message: 
+                type: "string"
+              body: 
+                required: 
+                  - "about"
+                  - "author"
+                  - "review"
+                  - "detail"
+                properties: 
+                  about: 
+                    required: 
+                      - "id"
+                      - "title"
+                      - "authorID"
+                      - "endFlag"
+                      - "image"
+                    properties: 
+                      id: 
+                        type: "number"
+                      title: 
+                        type: "string"
+                      authorID: 
+                        type: "number"
+                      endFlag: 
+                        type: "boolean"
+                    type: "object"
+                  author: 
+                    required: 
+                      - "id"
+                      - "name"
+                    properties: 
+                      id: 
+                        type: "number"
+                      name: 
+                        type: "string"
+                    type: "object"
+                  review: 
+                    required: 
+                      - "id"
+                      - "comicID"
+                      - "userID"
+                      - "rate"
+                      - "comment"
+                    properties: 
+                      id: 
+                        type: "number"
+                      comicID: 
+                        type: "number"
+                      userID: 
+                        type: "number"
+                      rate: 
+                        type: "number"
+                      comment: 
+                        type: "string"
+                    type: "object"
+                  detail: 
+                    type: "array"
+                    items: 
+                      type: "object"
+                      properties: 
+                        id: 
+                          type: "number"
+                        comicID: 
+                          type: "number"
+                        number: 
+                          type: "string"
+                        image: 
+                          type: "string"
+                        info: 
+                          required: 
+                            - "id"
+                            - "comicVolID"
+                            - "userID"
+                            - "readFlag"
+                            - "readDate"
+                            - "buyFlag"
+                            - "buyDate"
+                            - "comment"
+                          properties: 
+                            id: 
+                              type: "number"
+                            comicVolID: 
+                              type: "number"
+                            userID: 
+                              type: "number"
+                            readFlag: 
+                              type: "boolean"
+                            readDate: 
+                              type: "number"
+                            buyFlag: 
+                              type: "boolean"
+                            buyDate: 
+                              type: "number"
+                            comment: 
+                              type: "string"
+                          type: "object"
+                type: "object"
+
+                            
 
