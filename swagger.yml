@@ -313,7 +313,7 @@ paths:
           schema:
             $ref: "#/definitions/ResponseStandard"
   /update/comic:
-    post:
+    put:
       summary: "漫画情報を更新する"
       description: "漫画情報を更新する"
       tags:
@@ -353,7 +353,7 @@ paths:
           schema:
             $ref: "#/definitions/ResponseStandard"
   /update/comicVol:
-     post:
+     put:
       summary: "漫画の各話情報を更新する"
       description: "漫画の各話情報を更新する"
       tags:
@@ -388,7 +388,7 @@ paths:
           schema:
             $ref: "#/definitions/ResponseStandard"
   /update/comicVolInfo:
-    post:
+    put:
       summary: "漫画の各話レビュー情報を更新する"
       description: "漫画の各話レビュー情報を更新する"
       tags:
@@ -433,7 +433,7 @@ paths:
           schema:
             $ref: "#/definitions/ResponseStandard"
   /update/comicReview:
-    post:
+    put:
       summary: "漫画のレビュー情報を更新する"
       description: "漫画のレビュー情報を更新する"
       tags:
