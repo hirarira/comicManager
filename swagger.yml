@@ -12,6 +12,8 @@ schemes:
 paths:
   /status:
     get:
+      summary: "ステータスチェック"
+      description: "APIが起動しているかのステータスを返します"
       tags:
         - "status"
       responses:
@@ -29,3 +31,42 @@ paths:
               body:
                 type: "string"
                 example: ""
+  /get/user/{userid}:
+    get:
+      summary: "ユーザ情報取得"
+      description: "ユーザの情報を返します"
+      tags:
+        - "get"
+      parameters:
+      - name: "userid"
+        in: "path"
+        description: "取得したいUserのID"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ok"
+              message:
+                type: "string"
+                example: ""
+              body:
+                type: "object"
+                properties:
+                  id:
+                    type: "integer"
+                    example: "1"
+                  username:
+                    type: "string"
+                    example: "test"
+                  pass:
+                    type: "string"
+                    example: "hoge"
+                  
+
