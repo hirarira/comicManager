@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   description: "Use ComicManager.<br>https://github.com/hirarira/comicManager"
-  version: "1.0.0"
+  version: "0.7.0"
   title: "comicManager Express API"
   license:
     name: "Apache 2.0"
@@ -20,17 +20,7 @@ paths:
         "200":
           description: "成功時"
           schema:
-            type: "object"
-            properties:
-              status:
-                type: "string"
-                example: "ok"
-              message:
-                type: "string"
-                example: "status ok"
-              body:
-                type: "string"
-                example: ""
+            $ref: "#/definitions/ResponseStandard"
   /get/user/{userid}:
     get:
       summary: "ユーザ情報取得"
@@ -130,7 +120,60 @@ paths:
                     type: "array"
                     items:
                       $ref: "#/definitions/ComicVol"
+  /get/comicList:
+    get:
+      summary: "コミック一覧情報取得"
+      description: "コミックの一覧を返します"
+      tags:
+        - "get"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ComicAbout"
+  /create/author:
+    post:
+      summary: "著者を作成する"
+      description: "著者を作成する"
+      tags:
+        - "create"
+      consumes:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "author"
+        schema:
+          type: "object"
+          required:
+            - authorName
+          properties:
+            name:
+              description: "著者の名前"
+              type: "string"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+        "400":
+          description: "失敗時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
 definitions:
+  ResponseStandard:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        example: "ok"
+      message:
+        type: "string"
+        example: "status ok"
+      body:
+        type: "string"
+        example: ""
   ComicReview:
     type: "object"
     required: 
