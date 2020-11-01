@@ -1,0 +1,31 @@
+swagger: "2.0"
+info:
+  description: "Use ComicManager.<br>https://github.com/hirarira/comicManager"
+  version: "1.0.0"
+  title: "comicManager Express API"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:3334"
+schemes:
+- "http"
+paths:
+  /status:
+    get:
+      tags:
+        - "status"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ok"
+              message:
+                type: "string"
+                example: "status ok"
+              body:
+                type: "string"
+                example: ""
