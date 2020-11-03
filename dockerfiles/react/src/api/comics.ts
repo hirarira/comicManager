@@ -36,6 +36,10 @@ class Comics {
     const url = `${this.host}/update/comicReview`;
     return await axios.put(url, params);
   }
+  async createComic(params: object) {
+    const url = `${this.host}/create/comic`;
+    return await axios.post(url, params);
+  }
 }
 
 export default Comics;

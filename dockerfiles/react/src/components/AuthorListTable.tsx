@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { Paper, TableRow, TableCell, TableBody, Table, TableContainer, makeStyles, TableHead } from "@material-ui/core";
 
-interface Author {
+export interface Author {
   id: number,
   name: string
 }

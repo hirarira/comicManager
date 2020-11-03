@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useState, useEffect } from "react";
 import Header from "../components/Header";
 import Comics from '../api/comics';
-import { makeStyles, Grid, Button, TableContainer, Table, TableBody, TableRow, TableCell, Paper, FormControl, Select, MenuItem, TextField } from "@material-ui/core";
+import { makeStyles, Grid, Button, TableContainer, Table, TableBody, TableRow, TableCell, Paper, Select, MenuItem, TextField } from "@material-ui/core";
 import { initComicDetail } from "../type/ComicDetail";
 import ComicAboutTable from "../components/ComicAboutTable";
 import { format } from "date-fns";
