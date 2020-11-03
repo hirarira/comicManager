@@ -5,6 +5,7 @@ import Sample from './pages/Sample';
 import ComicDetail from './pages/comicDetail';
 import createComicInfo from './pages/createComicInfo';
 import createComic from './pages/createComic';
+import AuthorManager from './pages/authotManager';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route exact path="/detail/:comicID" component={ComicDetail} />
         <Route exact path="/createComicInfo/:comicID/:volID" component={createComicInfo} />
         <Route exact path="/createComic" component={createComic} />
+        <Route exact path="/authorManager" component={AuthorManager} />
       </Switch>
     </React.Fragment>
   )

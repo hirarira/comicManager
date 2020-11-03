@@ -87,6 +87,16 @@ const Home: FC<Props> = (()=>{
               </Button>
             </Link>
           </Grid>
+          <Grid item xs={12}>
+            作者管理
+          </Grid>
+          <Grid item xs={12}>
+            <Link href={`/authorManager`}>
+              <Button variant="contained" color="primary" style={{ marginTop: "10px" }}>
+                移動
+              </Button>
+            </Link>
+          </Grid>
         </Paper>
       </Grid>
     </div>
