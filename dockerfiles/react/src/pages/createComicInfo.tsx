@@ -130,69 +130,69 @@ const CreateComicInfo: FC<any> = ((props)=>{
             <p className={classes.subtitle}>漫画既読・コメント登録</p>
           </Grid>
           <Grid item xs={12}>
-              <TableContainer component={Paper} className={classes.table}>
-                <Table>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell>巻数</TableCell>
-                      <TableCell>{comicDetail.number}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>購入フラグ</TableCell>
-                      <TableCell>
-                        <Select
-                          value={buyFlag}
-                          onChange={(x)=>{ setBuyFlag(String(x.target.value)) }}
-                        >
-                          <MenuItem value="true">True</MenuItem>
-                          <MenuItem value="false">False</MenuItem>
-                        </Select>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>購入日</TableCell>
-                      <TableCell>
-                        <TextField
-                          type="date"
-                          value={format(buyDate, "yyyy-MM-dd")}
-                          onChange={ (e)=>{ setBuyDate(new Date(e.target.value)) } }
-                        />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>読破フラグ</TableCell>
-                      <TableCell>
-                        <Select
-                          value={readFlag}
-                          onChange={(x)=>{ setReadFlag(String(x.target.value)) }}
-                        >
-                          <MenuItem value="true">True</MenuItem>
-                          <MenuItem value="false">False</MenuItem>
-                        </Select>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>読破日</TableCell>
-                      <TableCell>
-                        <TextField
-                          type="date"
-                          value={format(readDate, "yyyy-MM-dd")}
-                          onChange={ (e)=>{ setReadDate(new Date(e.target.value)) } }
-                        />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>コメント</TableCell>
-                      <TableCell>
-                        <TextField
-                          value={comment}
-                          onChange={ (e)=>{ setCommnet(e.target.value) } }
-                        />
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
+            <TableContainer component={Paper} className={classes.table}>
+              <Table>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>巻数</TableCell>
+                    <TableCell>{comicDetail.number}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>購入フラグ</TableCell>
+                    <TableCell>
+                      <Select
+                        value={buyFlag}
+                        onChange={(x)=>{ setBuyFlag(String(x.target.value)) }}
+                      >
+                        <MenuItem value="true">True</MenuItem>
+                        <MenuItem value="false">False</MenuItem>
+                      </Select>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>購入日</TableCell>
+                    <TableCell>
+                      <TextField
+                        type="date"
+                        value={format(buyDate, "yyyy-MM-dd")}
+                        onChange={ (e)=>{ setBuyDate(new Date(e.target.value)) } }
+                      />
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>読破フラグ</TableCell>
+                    <TableCell>
+                      <Select
+                        value={readFlag}
+                        onChange={(x)=>{ setReadFlag(String(x.target.value)) }}
+                      >
+                        <MenuItem value="true">True</MenuItem>
+                        <MenuItem value="false">False</MenuItem>
+                      </Select>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>読破日</TableCell>
+                    <TableCell>
+                      <TextField
+                        type="date"
+                        value={format(readDate, "yyyy-MM-dd")}
+                        onChange={ (e)=>{ setReadDate(new Date(e.target.value)) } }
+                      />
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>コメント</TableCell>
+                    <TableCell>
+                      <TextField
+                        value={comment}
+                        onChange={ (e)=>{ setCommnet(e.target.value) } }
+                      />
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Grid>
           <Grid item xs={12}>
             <Button size="large" variant="contained" color="primary" onClick={ submitRegistVol }>
