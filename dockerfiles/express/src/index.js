@@ -97,16 +97,15 @@ app.get("/get/authors", async (req, res)=>{
 app.post("/create/author", async (req, res)=>{
   let resBody = {};
   try {
-    const addName = req.body.name;
-    const postBody = {
-      name: addName
+    const reqBody = {
+      name: req.body.name
     }
-    const result = await author.createAuthor();
+    const result = await author.createAuthor(reqBody);
     resBody = {
       'status': 'ok',
       'message': '',
       'body': {
-        req: postBody,
+        req: reqBody,
         res: result
       }
     }
