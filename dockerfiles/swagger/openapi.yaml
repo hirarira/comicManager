@@ -468,7 +468,30 @@ paths:
           description: "失敗時"
           schema:
             $ref: "#/definitions/ResponseStandard"
-
+  /delete/author/{authorID}:
+    delete:
+      summary: "著者を削除する"
+      description: "著者を削除する"
+      tags:
+        - "delete"
+      consumes:
+        - application/json
+      parameters:
+      - name: "authorID"
+        in: "path"
+        description: "削除したい著者のID"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+        "400":
+          description: "失敗時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
 definitions:
   ResponseStandard:
     type: "object"

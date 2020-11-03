@@ -31,6 +31,13 @@ class Author {
       name: options.name
     });
   }
+  async deleteAuthor(author_id) {
+    return await this.model.destroy({
+      where: {
+        id: author_id
+      }
+    })
+  }
 }
 
 module.exports = Author;

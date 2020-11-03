@@ -121,6 +121,31 @@ app.post("/create/author", async (req, res)=>{
   res.send(resBody);
 });
 
+app.delete("/delete/author/:authorID", async (req, res)=>{
+  let resBody = {};
+  try {
+    const authorID = req.params.authorID;
+    const result = await author.deleteAuthor(authorID);
+    resBody = {
+      'status': 'ok',
+      'message': '',
+      'body': {
+        req: authorID,
+        res: result
+      }
+    }
+  } catch(e) {
+    resBody = {
+      'status': 'ng',
+      'message': '',
+      'body': e.message
+    }
+    res = res.status(400);
+  }
+  res = addCommonHeader(res);
+  res.send(resBody);
+});
+
 /**
  * Comics 漫画の概要を操作する関数
  */
