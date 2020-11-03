@@ -98,13 +98,17 @@ app.post("/create/author", async (req, res)=>{
   let resBody = {};
   try {
     const addName = req.body.name;
-    const result = await author.createAuthor({
+    const postBody = {
       name: addName
-    });
+    }
+    const result = await author.createAuthor();
     resBody = {
       'status': 'ok',
       'message': '',
-      'body': result
+      'body': {
+        req: postBody,
+        res: result
+      }
     }
   } catch(e) {
     resBody = {
@@ -177,15 +181,19 @@ app.get("/get/comicList", async (req, res)=>{
 app.post("/create/comic", async (req, res)=>{
   let resBody = {};
   try {
-    const resComics = await comic.createComic({
+    const reqBody = {
       title: req.body.title,
       authorID: req.body.authorID,
       image: req.body.image
-    });
+    }
+    const resComics = await comic.createComic(reqBody);
     resBody = {
       'status': 'ok',
       'message': '',
-      'body': resComics
+      'body': {
+        req: reqBody,
+        res: resComics
+      }
     }
   } catch(e) {
     resBody = {
@@ -202,17 +210,21 @@ app.post("/create/comic", async (req, res)=>{
 app.put("/update/comic", async (req, res)=>{
   let resBody = {};
   try {
-    const resComics = await comic.updateComic({
+    const reqBody = {
       id: req.body.id,
       title: req.body.title,
       authorID: req.body.authorID,
       endFlag: (req.body.endFlag === 'true'),
       image: req.body.image
-    });
+    }
+    const resComics = await comic.updateComic(reqBody);
     resBody = {
       'status': 'ok',
       'message': '',
-      'body': resComics
+      'body': {
+        req: reqBody,
+        res: resComics
+      }
     }
   } catch(e) {
     resBody = {
@@ -232,15 +244,19 @@ app.put("/update/comic", async (req, res)=>{
 app.post("/create/comicVol", async (req, res)=>{
   let resBody = {};
   try {
-    const resComicVol = await comicVol.createComicVol({
+    const reqBody = {
       comicID: req.body.comicID,
       number: req.body.number,
       image: req.body.image
-    });
+    }
+    const resComicVol = await comicVol.createComicVol(reqBody);
     resBody = {
       'status': 'ok',
       'message': '',
-      'body': resComicVol
+      'body': {
+        req: reqBody,
+        res: resComicVol
+      }
     }
   } catch(e) {
     resBody = {
@@ -258,15 +274,19 @@ app.post("/create/comicVol", async (req, res)=>{
 app.put("/update/comicVol", async (req, res)=>{
   let resBody = {};
   try {
-    const resComicVol = await comicVol.updateComicVol({
+    const reqBody = {
       comicID: req.body.comicID,
       number: req.body.number,
       image: req.body.image
-    });
+    };
+    const resComicVol = await comicVol.updateComicVol(reqBody);
     resBody = {
       'status': 'ok',
       'message': '',
-      'body': resComicVol
+      'body': {
+        req: reqBody,
+        res: resComicVol
+      }
     }
   } catch(e) {
     resBody = {
@@ -285,7 +305,7 @@ app.put("/update/comicVol", async (req, res)=>{
 app.post("/create/comicVolInfo", async (req, res)=>{
   let resBody = {};
   try {
-    const resComicVol = await comicVolInfo.createComicVolInfo({
+    const reqBody = {
       comicVolID: req.body.comicVolID,
       userID: req.body.userID,
       readFlag: (req.body.readFlag === 'true'),
@@ -293,11 +313,15 @@ app.post("/create/comicVolInfo", async (req, res)=>{
       buyFlag: (req.body.buyFlag === 'true'),
       buyDate: req.body.buyDate,
       comment: req.body.comment
-    });
+    };
+    const resComicVol = await comicVolInfo.createComicVolInfo(reqBody);
     resBody = {
       'status': 'ok',
       'message': '',
-      'body': resComicVol
+      'body': { 
+        req: reqBody,
+        res: resComicVol
+      }
     }
   } catch(e) {
     resBody = {
@@ -313,7 +337,7 @@ app.post("/create/comicVolInfo", async (req, res)=>{
 app.put("/update/comicVolInfo", async (req, res)=>{
   let resBody = {};
   try {
-    const resComicVol = await comicVolInfo.updateComicVolInfo({
+    const reqBody = {
       comicVolID: req.body.comicVolID,
       userID: req.body.userID,
       readFlag: (req.body.readFlag === 'true'),
@@ -321,11 +345,15 @@ app.put("/update/comicVolInfo", async (req, res)=>{
       buyFlag: (req.body.buyFlag === 'true'),
       buyDate: req.body.buyDate,
       comment: req.body.comment
-    });
+    };
+    const resComicVol = await comicVolInfo.updateComicVolInfo(reqBody);
     resBody = {
       'status': 'ok',
       'message': '',
-      'body': resComicVol
+      'body': { 
+        req: reqBody,
+        res: resComicVol
+      }
     }
   } catch(e) {
     resBody = {
@@ -344,16 +372,20 @@ app.put("/update/comicVolInfo", async (req, res)=>{
 app.post("/create/comicReview", async (req, res)=>{
   let resBody = {};
   try {
-    const resComicReview = await comicReview.createComicReview({
+    const reqBody = {
       comicID: req.body.comicID,
       userID: req.body.userID,
       rate: req.body.rate,
       comment: req.body.comment
-    });
+    };
+    const resComicReview = await comicReview.createComicReview(reqBody);
     resBody = {
       'status': 'ok',
       'message': '',
-      'body': resComicReview
+      'body': {
+        req: reqBody,
+        res: resComicReview
+      }
     }
   } catch(e) {
     resBody = {
@@ -369,16 +401,20 @@ app.post("/create/comicReview", async (req, res)=>{
 app.put("/update/comicReview", async (req, res)=>{
   let resBody = {};
   try {
-    const resComicReview = await comicReview.updateComicReview({
+    const reqBody = {
       comicID: req.body.comicID,
       userID: req.body.userID,
       rate: req.body.rate,
       comment: req.body.comment
-    });
+    };
+    const resComicReview = await comicReview.updateComicReview(reqBody);
     resBody = {
       'status': 'ok',
       'message': '',
-      'body': resComicReview
+      'body': {
+        req: reqBody,
+        res: resComicReview
+      }
     }
   } catch(e) {
     resBody = {
