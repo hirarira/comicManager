@@ -1,0 +1,569 @@
+swagger: "2.0"
+info:
+  description: "漫画管理アプリで使用するAPI<br>Express.jsにて作動しています。<br>https://github.com/hirarira/comicManager"
+  version: "0.7.0"
+  title: "comicManager Express API"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:3334"
+schemes:
+- "http"
+paths:
+  /status:
+    get:
+      summary: "ステータスチェック"
+      description: "APIが起動しているかのステータスを返します"
+      tags:
+        - "status"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+  /get/user/{userid}:
+    get:
+      summary: "ユーザ情報取得"
+      description: "ユーザの情報を返します"
+      tags:
+        - "get"
+      parameters:
+      - name: "userid"
+        in: "path"
+        description: "取得したいUserのID"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ok"
+              message:
+                type: "string"
+                example: ""
+              body:
+                type: "object"
+                properties:
+                  id:
+                    type: "integer"
+                    example: "1"
+                  username:
+                    type: "string"
+                    example: "test"
+                  pass:
+                    type: "string"
+                    example: "hoge"
+  /get/authors:
+    get:
+      summary: "著者一覧取得"
+      description: "著者情報の一覧を返します"
+      tags:
+        - "get"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ok"
+              message:
+                type: "string"
+                example: ""
+              body:
+                type: "array"
+                items:
+                  $ref: "#/definitions/ComicAuthor"
+  /get/comic/{comicID}:
+    get:
+      summary: "コミック情報取得"
+      description: "コミックの情報を返します"
+      tags:
+        - "get"
+      parameters:
+      - name: "comicID"
+        in: "path"
+        description: "取得したいコミックのID"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            type: "object"
+            properties:
+              status: 
+                type: "string"
+              message: 
+                type: "string"
+              body: 
+                required: 
+                  - "about"
+                  - "author"
+                  - "review"
+                  - "detail"
+                properties: 
+                  about:
+                    $ref: "#/definitions/ComicAbout"
+                  author: 
+                    $ref: "#/definitions/ComicAuthor"
+                  review: 
+                    $ref: "#/definitions/ComicReview"
+                  detail: 
+                    type: "array"
+                    items:
+                      $ref: "#/definitions/ComicVol"
+  /get/comicList:
+    get:
+      summary: "コミック一覧情報取得"
+      description: "コミックの一覧を返します"
+      tags:
+        - "get"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ComicAbout"
+  /create/author:
+    post:
+      summary: "著者を作成する"
+      description: "著者を作成する"
+      tags:
+        - "create"
+      consumes:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "author"
+        schema:
+          type: "object"
+          required:
+            - name
+          properties:
+            name:
+              description: "著者の名前"
+              type: "string"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+        "400":
+          description: "失敗時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+  /create/comic:
+    post:
+      summary: "漫画情報を作成する"
+      description: "漫画情報を作成する"
+      tags:
+        - "create"
+      consumes:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "body"
+        schema:
+          type: "object"
+          required:
+            - title
+            - authorID
+            - image
+          properties:
+            title:
+              description: "漫画のタイトル"
+              type: "string"
+            authorID:
+              description: "著者ID"
+              type: "integer"
+            image:
+              description: "漫画のサムネURL"
+              type: "string"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+        "400":
+          description: "失敗時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+  /create/comicVol:
+    post:
+      summary: "漫画の各話情報を作成する"
+      description: "漫画の各話情報を作成する"
+      tags:
+        - "create"
+      parameters:
+      - in: "body"
+        name: "body"
+        schema:
+          type: "object"
+          required:
+            - comicID
+            - number
+            - image
+          properties:
+            comicID:
+              description: "漫画ID"
+              type: "integer"
+            number:
+              description: "巻数"
+              type: "string"
+            image:
+              description: "漫画のサムネURL"
+              type: "string"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+        "400":
+          description: "失敗時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+  /create/comicVolInfo:
+    post:
+      summary: "漫画の各話レビュー情報を作成する"
+      description: "漫画の各話レビュー情報を作成する"
+      tags:
+        - "create"
+      parameters:
+      - in: "body"
+        name: "body"
+        schema:
+          type: "object"
+          required:
+            - comicVolID
+            - userID
+          properties:
+            comicVolID:
+              description: "漫画各話ID"
+              type: "integer"
+            userID:
+              description: "ユーザID"
+              type: "integer"
+            readFlag:
+              description: "既読フラグ"
+              type: "boolean"
+            readDate:
+              description: "読破日時(UNIX TIME)"
+              type: "integer"
+            buyFlag:
+              description: "購入フラグ"
+              type: "boolean"
+            buyDate:
+              description: "購入日時(UNIX TIME)"
+              type: "integer"
+            comment:
+              description: "コメント"
+              type: "string"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+        "400":
+          description: "失敗時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+  /create/comicReview:
+    post:
+      summary: "漫画のレビュー情報を作成する"
+      description: "漫画のレビュー情報を作成する"
+      tags:
+        - "create"
+      parameters:
+      - in: "body"
+        name: "body"
+        schema:
+          type: "object"
+          required:
+            - comicID
+            - userID
+          properties:
+            comicID:
+              description: "漫画ID"
+              type: "integer"
+            userID:
+              description: "ユーザID"
+              type: "integer"
+            rate:
+              description: "評価"
+              type: "integer"
+            comment:
+              description: "コメント"
+              type: "string"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+        "400":
+          description: "失敗時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+  /update/comic:
+    put:
+      summary: "漫画情報を更新する"
+      description: "漫画情報を更新する"
+      tags:
+        - "update"
+      consumes:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "body"
+        schema:
+          type: "object"
+          required:
+            - id
+          properties:
+            id:
+              description: "漫画情報ID"
+              type: "integer"
+            title:
+              description: "漫画のタイトル"
+              type: "string"
+            authorID:
+              description: "著者ID"
+              type: "integer"
+            endFlag:
+              description: "完結フラグ"
+              type: "boolean"
+            image:
+              description: "漫画のサムネURL"
+              type: "string"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+        "400":
+          description: "失敗時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+  /update/comicVol:
+     put:
+      summary: "漫画の各話情報を更新する"
+      description: "漫画の各話情報を更新する"
+      tags:
+        - "update"
+      consumes:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "body"
+        schema:
+          type: "object"
+          required:
+            - comicID
+            - number
+          properties:
+            comicID:
+              description: "漫画ID"
+              type: "integer"
+            number:
+              description: "巻数"
+              type: "string"
+            image:
+              description: "漫画のサムネURL"
+              type: "string"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+        "400":
+          description: "失敗時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+  /update/comicVolInfo:
+    put:
+      summary: "漫画の各話レビュー情報を更新する"
+      description: "漫画の各話レビュー情報を更新する"
+      tags:
+        - "update"
+      parameters:
+      - in: "body"
+        name: "body"
+        schema:
+          type: "object"
+          required:
+            - comicVolID
+            - userID
+          properties:
+            comicVolID:
+              description: "漫画各話ID"
+              type: "integer"
+            userID:
+              description: "ユーザID"
+              type: "integer"
+            readFlag:
+              description: "既読フラグ"
+              type: "boolean"
+            readDate:
+              description: "読破日時(UNIX TIME)"
+              type: "integer"
+            buyFlag:
+              description: "購入フラグ"
+              type: "boolean"
+            buyDate:
+              description: "購入日時(UNIX TIME)"
+              type: "integer"
+            comment:
+              description: "コメント"
+              type: "string"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+        "400":
+          description: "失敗時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+  /update/comicReview:
+    put:
+      summary: "漫画のレビュー情報を更新する"
+      description: "漫画のレビュー情報を更新する"
+      tags:
+        - "update"
+      parameters:
+      - in: "body"
+        name: "body"
+        schema:
+          type: "object"
+          required:
+            - comicID
+            - userID
+          properties:
+            comicID:
+              description: "漫画ID"
+              type: "integer"
+            userID:
+              description: "ユーザID"
+              type: "integer"
+            rate:
+              description: "評価"
+              type: "integer"
+            comment:
+              description: "コメント"
+              type: "string"
+      responses:
+        "200":
+          description: "成功時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+        "400":
+          description: "失敗時"
+          schema:
+            $ref: "#/definitions/ResponseStandard"
+
+definitions:
+  ResponseStandard:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        example: "ok"
+      message:
+        type: "string"
+        example: "status ok"
+      body:
+        type: "string"
+        example: ""
+  ComicReview:
+    type: "object"
+    required: 
+      - "id"
+      - "comicID"
+      - "userID"
+      - "rate"
+      - "comment"
+    properties: 
+      id: 
+        type: "number"
+      comicID: 
+        type: "number"
+      userID: 
+        type: "number"
+      rate: 
+        type: "number"
+      comment: 
+        type: "string"
+  ComicAbout:
+      type: "object"
+      required: 
+        - "id"
+        - "title"
+        - "authorID"
+        - "endFlag"
+        - "image"
+      properties: 
+        id: 
+          type: "number"
+        title: 
+          type: "string"
+        authorID: 
+          type: "number"
+        endFlag: 
+          type: "boolean"
+  ComicAuthor:
+    type: "object"
+    required: 
+      - "id"
+      - "name"
+    properties: 
+      id: 
+        type: "number"
+      name: 
+        type: "string"
+  ComicVol:
+    type: "object"
+    properties:
+      id: 
+        type: "number"
+      comicID: 
+        type: "number"
+      number: 
+        type: "string"
+      image: 
+        type: "string"
+      info: 
+        required: 
+          - "id"
+          - "comicVolID"
+          - "userID"
+          - "readFlag"
+          - "readDate"
+          - "buyFlag"
+          - "buyDate"
+          - "comment"
+        properties: 
+          id: 
+            type: "number"
+          comicVolID: 
+            type: "number"
+          userID: 
+            type: "number"
+          readFlag: 
+            type: "boolean"
+          readDate: 
+            type: "number"
+          buyFlag: 
+            type: "boolean"
+          buyDate: 
+            type: "number"
+          comment: 
+            type: "string"
+        type: "object"

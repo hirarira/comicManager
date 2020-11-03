@@ -199,7 +199,7 @@ app.post("/create/comic", async (req, res)=>{
   res.send(resBody);
 });
 
-app.post("/update/comic", async (req, res)=>{
+app.put("/update/comic", async (req, res)=>{
   let resBody = {};
   try {
     const resComics = await comic.updateComic({
@@ -255,7 +255,7 @@ app.post("/create/comicVol", async (req, res)=>{
 });
 
 
-app.post("/update/comicVol", async (req, res)=>{
+app.put("/update/comicVol", async (req, res)=>{
   let resBody = {};
   try {
     const resComicVol = await comicVol.updateComicVol({
@@ -310,7 +310,7 @@ app.post("/create/comicVolInfo", async (req, res)=>{
   res.send(resBody);
 });
 
-app.post("/update/comicVolInfo", async (req, res)=>{
+app.put("/update/comicVolInfo", async (req, res)=>{
   let resBody = {};
   try {
     const resComicVol = await comicVolInfo.updateComicVolInfo({
@@ -366,7 +366,7 @@ app.post("/create/comicReview", async (req, res)=>{
   res.send(resBody);
 });
 
-app.post("/update/comicReview", async (req, res)=>{
+app.put("/update/comicReview", async (req, res)=>{
   let resBody = {};
   try {
     const resComicReview = await comicReview.updateComicReview({
