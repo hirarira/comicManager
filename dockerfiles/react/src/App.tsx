@@ -4,6 +4,7 @@ import Home from './pages/home';
 import Sample from './pages/Sample';
 import ComicDetail from './pages/comicDetail';
 import createComicInfo from './pages/createComicInfo';
+import createComic from './pages/createComic';
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Route exact path="/sample" component={Sample} />
         <Route exact path="/detail/:comicID" component={ComicDetail} />
         <Route exact path="/createComicInfo/:comicID/:volID" component={createComicInfo} />
+        <Route exact path="/createComic" component={createComic} />
       </Switch>
     </React.Fragment>
   )
