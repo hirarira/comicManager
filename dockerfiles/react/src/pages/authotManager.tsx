@@ -48,7 +48,7 @@ const AuthorManager: FC = (()=>{
     fetch();
   }, [fetch]);
 
-  const submitCreateAuthor = async () =>{
+  const submitCreateAuthor = async () => {
     try {
       const res = await authors.createAuthor(createAuthorName);
       setHttpResStates({
@@ -59,6 +59,22 @@ const AuthorManager: FC = (()=>{
       setHttpResStates({
         status: 'ng',
         message: '作者が追加されませんでした'
+      });
+    }
+    fetch();
+  }
+
+  const submitDeleteAuthor = async () => {
+    try {
+      const res = await authors.deleteAuthor(deleteAuthorID);
+      setHttpResStates({
+        status: 'ok',
+        message: '正常に作者が削除されました'
+      });
+    } catch (e) {
+      setHttpResStates({
+        status: 'ng',
+        message: '作者が削除できませんでした'
       });
     }
     fetch();
@@ -96,7 +112,7 @@ const AuthorManager: FC = (()=>{
         </Paper>
         <Paper className={classes.paperArea}>
           <Grid item xs={12}>
-              作者削除
+            作者削除
           </Grid>
           <Grid item xs={12}>
             <Select
@@ -109,6 +125,11 @@ const AuthorManager: FC = (()=>{
                 )
               })}
             </Select>
+          </Grid>
+          <Grid item xs={12}>
+            <Button size="large" variant="contained" color="primary" onClick={ submitDeleteAuthor }>
+              作者削除
+            </Button>
           </Grid>
         </Paper>
         <Paper className={classes.paperArea}>
