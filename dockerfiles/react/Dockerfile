@@ -1,12 +1,12 @@
-FROM nginx:latest
+FROM node:latest
 
 WORKDIR /app
-COPY . /app/
-RUN apt-get -y update && apt-get install -y curl
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
-RUN apt-get install -y nodejs
-RUN npm install npm@latest -g
+COPY package* /app/
+COPY tsconfig.json /app/
+COPY ./public/ /app/public/
+COPY ./src/ /app/src/
 RUN npm install
 RUN npm run build
-RUN cp -r ./build/* /usr/share/nginx/html/
-RUN cp ./default.conf /etc/nginx/conf.d/
+RUN ls -la ./build
+RUN cp -r ./build/ /usr/share/build/
+RUN ls -la /usr/share/build/

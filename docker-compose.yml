@@ -30,7 +30,18 @@ services:
       API_URL: /openapi.yaml
   react:
     build: ./dockerfiles/react/
-    ports:
-      - 80:80
     links:
       - express:express
+    volumes:
+      - react-build:/usr/share/build/
+  nginx:
+    build: ./dockerfiles/nginx/
+    volumes:
+      - react-build:/usr/share/nginx/html/
+    links:
+      - swagger
+      - express
+    ports:
+      - 80:80
+volumes:
+  react-build:
