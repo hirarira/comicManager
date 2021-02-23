@@ -6,7 +6,6 @@ const cors = require('cors');
 const BodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const fs = require('fs');
-app.use(fileUpload());
 
 const DBSetting = require('./model/dbSetting.js');
 const User = require('./model/user.js');
@@ -24,14 +23,15 @@ const comicVol = new ComicVol(dbsettings);
 const comicVolInfo = new ComicVolInfo(dbsettings);
 const comicReview = new ComicReview(dbsettings);
 
+app.use(fileUpload());
 app.use(cors());
-
 // urlencodedとjsonは別々に初期化する
 app.use(BodyParser.urlencoded({
   extended: true
 }));
-
 app.use(BodyParser.json());
+// /img 配下のアクセスはそのまま通す
+app.use(Express.static('static'));
 
 const server = app.listen(3334, function(){
   console.log("Node.js is listening to PORT:" + server.address().port);
@@ -251,7 +251,7 @@ app.put("/update/comic", async (req, res)=>{
     const imageData = req.files.image;
     if(imageData) {
       const baseName = imageData.name;
-      imagePath = `img/${comicID}-${baseName}`;
+      imagePath = `static/img/${comicID}-${baseName}`;
       reqBody.image = imagePath;
       fs.writeFile(imagePath, imageData.data, (err) => {
         if(!err) {
