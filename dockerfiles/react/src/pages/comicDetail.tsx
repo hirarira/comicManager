@@ -100,6 +100,13 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
           書影
         </Grid>
         <Grid item xs={12}>
+          <Button variant="contained" color="primary">
+            <Link href={`/editComicAbout/${comicID}`}>
+              概要編集
+            </Link>
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
           <p className={classes.subtitle}>各話詳細</p>
         </Grid>
         <Grid item xs={12}>
