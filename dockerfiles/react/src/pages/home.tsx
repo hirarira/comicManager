@@ -78,22 +78,16 @@ const Home: FC<Props> = (()=>{
         </Paper>
         <Paper className={classes.paperArea}>
           <Grid item xs={12}>
-            漫画新規登録
-          </Grid>
-          <Grid item xs={12}>
             <Link href={`/createComic`}>
               <Button variant="contained" color="primary" style={{ marginTop: "10px" }}>
-                移動
+              漫画新規登録
               </Button>
             </Link>
           </Grid>
           <Grid item xs={12}>
-            作者管理
-          </Grid>
-          <Grid item xs={12}>
             <Link href={`/authorManager`}>
               <Button variant="contained" color="primary" style={{ marginTop: "10px" }}>
-                移動
+              作者管理
               </Button>
             </Link>
           </Grid>
