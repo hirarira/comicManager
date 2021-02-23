@@ -5,6 +5,7 @@ const app = Express();
 const cors = require('cors');
 const BodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
+const methodOverride = require('method-override');
 const fs = require('fs');
 
 const DBSetting = require('./model/dbSetting.js');
@@ -32,6 +33,7 @@ app.use(BodyParser.urlencoded({
 app.use(BodyParser.json());
 // /img 配下のアクセスはそのまま通す
 app.use(Express.static('static'));
+app.use(methodOverride('_method'));
 
 const server = app.listen(3334, function(){
   console.log("Node.js is listening to PORT:" + server.address().port);
