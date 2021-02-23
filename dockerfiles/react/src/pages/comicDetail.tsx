@@ -116,7 +116,7 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
         </Grid>
         <Grid item xs={12}>
           <Button variant="contained" color="primary">
-            <Link href={`/editComicAbout/${comicID}`}>
+            <Link href={`/editComicAbout/${comicID}`} color="inherit">
               概要編集
             </Link>
           </Button>
