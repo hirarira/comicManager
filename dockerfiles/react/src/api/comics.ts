@@ -5,6 +5,9 @@ class Comics {
   constructor() {
     this.host = "http://localhost:3334";
   }
+  getHost() {
+    return this.host;
+  }
   async getComicList() {
     const url = this.host + '/get/comicList';
     return await axios.get(url);
