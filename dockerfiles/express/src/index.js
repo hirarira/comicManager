@@ -238,12 +238,26 @@ app.post("/create/comic", async (req, res)=>{
 app.put("/update/comic", async (req, res)=>{
   let resBody = {};
   try {
+    const comicID = req.body.id;
     const reqBody = {
-      id: req.body.id,
+      id: comicID,
       title: req.body.title,
       authorID: req.body.authorID,
       endFlag: (req.body.endFlag === 'true'),
       image: req.body.image
+    }
+    let isSetURL = false;
+    let imagePath = "";
+    const imageData = req.files.image;
+    if(imageData) {
+      const baseName = imageData.name;
+      imagePath = `img/${comicID}-${baseName}`;
+      reqBody.image = imagePath;
+      fs.writeFile(imagePath, imageData.data, (err) => {
+        if(!err) {
+          isSetURL = true;
+        }
+      });
     }
     const resComics = await comic.updateComic(reqBody);
     resBody = {
@@ -251,7 +265,8 @@ app.put("/update/comic", async (req, res)=>{
       'message': '',
       'body': {
         req: reqBody,
-        res: resComics
+        res: resComics,
+        imagePath: imagePath
       }
     }
   } catch(e) {
@@ -265,35 +280,6 @@ app.put("/update/comic", async (req, res)=>{
   res = addCommonHeader(res);
   res.send(resBody);
 });
-
-app.post("/upload/comicimage/:comicID", async (req, res) => {
-  let resBody = {};
-  try {
-    const comicID = req.params.comicID;
-    const imageData = req.files.image;
-    if(comicID && imageData) {
-      const baseName = imageData.name;
-      const imagePath = `img/${comicID}-${baseName}`;
-      fs.writeFile(imagePath, imageData.data, (err) => {
-        console.log(err);
-      });
-      resBody = {
-        'status': 'ok',
-        'message': `save: ${imagePath}`,
-      }
-    }
-  }
-  catch(e) {
-    resBody = {
-      'status': 'ng',
-      'message': '',
-      'body': e.message
-    }
-    res = res.status(400);
-  }
-  res = addCommonHeader(res);
-  res.send(resBody);
-})
 
 /**
  * ComicVol: 漫画の各話情報を管理する関数
