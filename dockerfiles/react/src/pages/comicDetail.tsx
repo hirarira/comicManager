@@ -90,16 +90,7 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
       }
     }
   }
-  const getBookImage = () => {
-    const baseImagePath = comic.about.image;
-    if(baseImagePath) {
-      const imagePath = baseImagePath.match(/static\/(.*)/);
-      if(imagePath) {
-        return `${comics.getHost()}/${imagePath[1]}`;
-      }
-    }
-  }
-  
+
   return (
     <div>
       <Header/>
@@ -112,7 +103,7 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
           />
         </Grid>
         <Grid item xs={6}>
-          <img src={getBookImage()} width="300px" />
+          <img src={comics.getBookImage(comic.about.image)} width="300px" />
         </Grid>
         <Grid item xs={12}>
           <Button variant="contained" color="primary">

@@ -44,11 +44,11 @@ const ComicAboutEdit: React.FC<DetailProps> = ((props)=>{
           />
         </Grid>
         <Grid item xs={6}>
-          書影
+          <img src={comics.getBookImage(comic.about.image)} width="300px" />
         </Grid>
         <Grid item xs={12}>
           <form action={`${comics.getHost()}/update/comic?_method=put`} method="post" encType="multipart/form-data">
-            <input type="text" name="id" value={comicID} /><br/>
+            <input type="hidden" name="id" value={comicID} /><br/>
             <input type="file" name="image" accept="image/jpeg, image/png" /><br/>
             <input type="submit" value="送信"/><br/>
           </form>

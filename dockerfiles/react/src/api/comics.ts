@@ -43,6 +43,14 @@ class Comics {
     const url = `${this.host}/create/comic`;
     return await axios.post(url, params);
   }
+  getBookImage(baseImagePath: string) {
+    if(baseImagePath) {
+      const imagePath = baseImagePath.match(/static\/(.*)/);
+      if(imagePath) {
+        return `${this.getHost()}/${imagePath[1]}`;
+      }
+    }
+  }
 }
 
 export default Comics;
