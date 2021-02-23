@@ -2,7 +2,7 @@
   "name": "comic-manager",
   "version": "0.8.0",
   "private": true,
-  "homepage": "http://v.chashitsu.org:3335/",
+  "homepage": "http://localhost/",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
