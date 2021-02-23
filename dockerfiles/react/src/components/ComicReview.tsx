@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ComicReview: FC<Props> = ((props)=>{
   const comics = new Comics();
+  console.log(props.review);
   const [rate, setRate] = useState(props.review.rate);
   const [comment, setComment] = useState(props.review.comment);
   const [resReviewResult, setResReviewResult] = useState("");

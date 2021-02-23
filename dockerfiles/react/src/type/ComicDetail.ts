@@ -17,7 +17,7 @@ export interface ComicDetailFormat {
     rate: number,
     comment: string
   },
-  detail: []
+  detail: any
 }
 
 export const initComicDetail: ComicDetailFormat = {
