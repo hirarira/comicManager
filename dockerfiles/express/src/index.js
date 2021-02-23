@@ -4,6 +4,9 @@ const Express = require("express");
 const app = Express();
 const cors = require('cors');
 const BodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
+const fs = require('fs');
+app.use(fileUpload());
 
 const DBSetting = require('./model/dbSetting.js');
 const User = require('./model/user.js');
@@ -262,6 +265,35 @@ app.put("/update/comic", async (req, res)=>{
   res = addCommonHeader(res);
   res.send(resBody);
 });
+
+app.post("/upload/comicimage/:comicID", async (req, res) => {
+  let resBody = {};
+  try {
+    const comicID = req.params.comicID;
+    const imageData = req.files.image;
+    if(comicID && imageData) {
+      const baseName = imageData.name;
+      const imagePath = `img/${comicID}-${baseName}`;
+      fs.writeFile(imagePath, imageData.data, (err) => {
+        console.log(err);
+      });
+      resBody = {
+        'status': 'ok',
+        'message': `save: ${imagePath}`,
+      }
+    }
+  }
+  catch(e) {
+    resBody = {
+      'status': 'ng',
+      'message': '',
+      'body': e.message
+    }
+    res = res.status(400);
+  }
+  res = addCommonHeader(res);
+  res.send(resBody);
+})
 
 /**
  * ComicVol: 漫画の各話情報を管理する関数
