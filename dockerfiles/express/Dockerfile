@@ -5,3 +5,4 @@ ENV COMIC_DB_PASS=mariadb
 ENV COMIC_DB_HOST=mariadb
 
 WORKDIR /server
+RUN mkdir -p ./src/static/img

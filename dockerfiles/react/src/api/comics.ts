@@ -5,6 +5,9 @@ class Comics {
   constructor() {
     this.host = "http://localhost:3334";
   }
+  getHost() {
+    return this.host;
+  }
   async getComicList() {
     const url = this.host + '/get/comicList';
     return await axios.get(url);
@@ -39,6 +42,14 @@ class Comics {
   async createComic(params: object) {
     const url = `${this.host}/create/comic`;
     return await axios.post(url, params);
+  }
+  getBookImage(baseImagePath: string) {
+    if(baseImagePath) {
+      const imagePath = baseImagePath.match(/static\/(.*)/);
+      if(imagePath) {
+        return `${this.getHost()}/${imagePath[1]}`;
+      }
+    }
   }
 }
 

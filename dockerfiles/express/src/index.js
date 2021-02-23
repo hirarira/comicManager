@@ -1,8 +1,12 @@
 "use strict";
+require('dotenv').config();
 const Express = require("express");
 const app = Express();
 const cors = require('cors');
 const BodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
+const methodOverride = require('method-override');
+const fs = require('fs');
 
 const DBSetting = require('./model/dbSetting.js');
 const User = require('./model/user.js');
@@ -20,14 +24,16 @@ const comicVol = new ComicVol(dbsettings);
 const comicVolInfo = new ComicVolInfo(dbsettings);
 const comicReview = new ComicReview(dbsettings);
 
+app.use(fileUpload());
 app.use(cors());
-
 // urlencodedとjsonは別々に初期化する
 app.use(BodyParser.urlencoded({
   extended: true
 }));
-
 app.use(BodyParser.json());
+// /img 配下のアクセスはそのまま通す
+app.use(Express.static('static'));
+app.use(methodOverride('_method'));
 
 const server = app.listen(3334, function(){
   console.log("Node.js is listening to PORT:" + server.address().port);
@@ -234,12 +240,26 @@ app.post("/create/comic", async (req, res)=>{
 app.put("/update/comic", async (req, res)=>{
   let resBody = {};
   try {
+    const comicID = req.body.id;
     const reqBody = {
-      id: req.body.id,
+      id: comicID,
       title: req.body.title,
       authorID: req.body.authorID,
       endFlag: (req.body.endFlag === 'true'),
       image: req.body.image
+    }
+    let isSetURL = false;
+    let imagePath = "";
+    const imageData = req.files.image;
+    if(imageData) {
+      const baseName = imageData.name;
+      imagePath = `static/img/${comicID}-${baseName}`;
+      reqBody.image = imagePath;
+      fs.writeFile(imagePath, imageData.data, (err) => {
+        if(!err) {
+          isSetURL = true;
+        }
+      });
     }
     const resComics = await comic.updateComic(reqBody);
     resBody = {
@@ -247,7 +267,8 @@ app.put("/update/comic", async (req, res)=>{
       'message': '',
       'body': {
         req: reqBody,
-        res: resComics
+        res: resComics,
+        imagePath: imagePath
       }
     }
   } catch(e) {

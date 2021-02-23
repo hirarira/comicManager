@@ -41,7 +41,7 @@ const Home: FC<Props> = (()=>{
   }, []);
 
   useEffect(()=>{
-    document.title = '漫画管理アプリ: title';
+    document.title = '漫画管理アプリ: TOP';
     fetch();
   }, [fetch]);
 

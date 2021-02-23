@@ -106,15 +106,6 @@ const CreateComic: FC<Props> = (()=>{
                       </Select>
                     </TableCell>
                   </TableRow>
-                  <TableRow>
-                    <TableCell>書影</TableCell>
-                    <TableCell>
-                      <TextField
-                        value={selectComicImage}
-                        onChange={ (e)=>{ setSelectComicImage(e.target.value) } }
-                      />
-                    </TableCell>
-                  </TableRow>
                 </TableBody>
               </Table>
             </TableContainer>

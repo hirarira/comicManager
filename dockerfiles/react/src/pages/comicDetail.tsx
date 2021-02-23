@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import Comics from '../api/comics';
 import { makeStyles, Grid, Button, TextField, Select, MenuItem, FormControl, Link, InputLabel } from "@material-ui/core";
 import Alert from '@material-ui/lab/Alert';
-import { initComicDetail } from "../type/ComicDetail";
+import { ComicDetailFormat, initComicDetail } from "../type/ComicDetail";
 import ComicAboutTable from "../components/ComicAboutTable";
 import ComicDetailTable from "../components/ComicDetailTable";
 import ComicReview from "../components/ComicReview";
@@ -41,7 +41,7 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
   const classes = useStyles();
   const comicID = props.match.params.comicID;
   const comics = new Comics();
-  const [comic, setComic] = useState<any>(initComicDetail);
+  const [comic, setComic] = useState<ComicDetailFormat>(initComicDetail);
   const [createNewComicVol, setCreateNewComicVol] = useState(-1);
   const [selectUpdateComicVol, setSelectUpdateComicVol] = useState(1);
   // アラートを表示する（新規コミックVol追加）
@@ -51,8 +51,14 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
   // 3: 成功
   const [alertResult, setAlertResult] = useState(0);
   const updateComicDetail = useCallback(async()=>{
-    const comicDetail = await comics.getComicDetail(comicID);
-    setComic(comicDetail.data.body);
+    const res = await comics.getComicDetail(comicID);
+    // Reviewがnullの場合
+    const comicDetail: ComicDetailFormat  = res.data.body;
+    if(!comicDetail.review) {
+      comicDetail.review = initComicDetail.review;
+    }
+    console.log(comicDetail.review);
+    setComic(comicDetail);
   }, []);
 
   useEffect(()=>{
@@ -73,7 +79,7 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
     } else {
       const comicID = comic.about.id;
       try {
-        const res = await comics.createComicVol(comicID, createNewComicVol);
+        const res = await comics.createComicVol(comicID.toString(), createNewComicVol);
         console.log(res);
         setAlertResult(3);
         updateComicDetail();
@@ -84,7 +90,7 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
       }
     }
   }
-  
+
   return (
     <div>
       <Header/>
@@ -97,7 +103,14 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
           />
         </Grid>
         <Grid item xs={6}>
-          書影
+          <img src={comics.getBookImage(comic.about.image)} width="300px" />
+        </Grid>
+        <Grid item xs={12}>
+          <Button variant="contained" color="primary">
+            <Link href={`/editComicAbout/${comicID}`} color="inherit">
+              概要編集
+            </Link>
+          </Button>
         </Grid>
         <Grid item xs={12}>
           <p className={classes.subtitle}>各話詳細</p>
@@ -157,9 +170,11 @@ const ComicDetail: FC<DetailProps> = ((props)=>{
           <p className={classes.subtitle}>レビュー</p>
         </Grid>
         <Grid item xs={12}>
-          <ComicReview
-            review={comic.review}
-          />
+          {comic.review &&
+            <ComicReview
+              review={comic.review}
+            />
+          }
         </Grid>
       </Grid>
     </div>
