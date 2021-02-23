@@ -1,4 +1,5 @@
 import { Grid, makeStyles } from "@material-ui/core";
+import { ifError } from "assert";
 import React, { useCallback, useState, useEffect } from "react";
 import { RouteComponentProps } from 'react-router-dom';
 import Comics from "../api/comics";
@@ -47,11 +48,22 @@ const ComicAboutEdit: React.FC<DetailProps> = ((props)=>{
           <img src={comics.getBookImage(comic.about.image)} width="300px" />
         </Grid>
         <Grid item xs={12}>
-          <form action={`${comics.getHost()}/update/comic?_method=put`} method="post" encType="multipart/form-data">
+          <form
+            action={`${comics.getHost()}/update/comic?_method=put`}
+            method="post"
+            encType="multipart/form-data"
+            target="updateComics"
+          >
             <input type="hidden" name="id" value={comicID} /><br/>
             <input type="file" name="image" accept="image/jpeg, image/png" /><br/>
             <input type="submit" value="送信"/><br/>
           </form>
+        </Grid>
+        <Grid item xs={12}>
+          <div>結果詳細</div>
+          <div>
+            <iframe name="updateComics"></iframe>
+          </div>
         </Grid>
       </Grid>
     </div>
