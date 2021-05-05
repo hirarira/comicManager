@@ -31,12 +31,6 @@ services:
       - ./dockerfiles/swagger/openapi.yaml:/usr/share/nginx/html/openapi.yaml
     environment:
       API_URL: ./openapi.yaml
-  react:
-    build: ./dockerfiles/react/
-    links:
-      - express:express
-    volumes:
-      - react-build:/usr/share/build/
   nginx:
     build: ./dockerfiles/nginx/
     image: hirarira/comicmanager-nginx:latest
