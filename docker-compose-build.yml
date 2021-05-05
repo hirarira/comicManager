@@ -22,12 +22,28 @@ services:
     links:
       - mariadb
     command: [sh, -c, npm install && npm start]
+  swagger:
+    build: ./dockerfiles/swagger/
+    image: hirarira/comicmanager-swagger:latest
+    ports:
+      - 3335:8080
+    volumes:
+      - ./dockerfiles/swagger/openapi.yaml:/usr/share/nginx/html/openapi.yaml
+    environment:
+      API_URL: ./openapi.yaml
+  react:
+    build: ./dockerfiles/react/
+    links:
+      - express:express
+    volumes:
+      - react-build:/usr/share/build/
   nginx:
     build: ./dockerfiles/nginx/
     image: hirarira/comicmanager-nginx:latest
     volumes:
       - react-build:/usr/share/nginx/html/
     links:
+      - swagger
       - express
     ports:
       - 80:80
