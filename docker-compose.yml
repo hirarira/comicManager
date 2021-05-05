@@ -21,13 +21,13 @@ services:
       - mariadb
     command: [sh, -c, npm install && npm start]
   swagger:
-    image: swaggerapi/swagger-ui
+    build: ./dockerfiles/swagger/
     ports:
       - 3335:8080
     volumes:
       - ./dockerfiles/swagger/openapi.yaml:/usr/share/nginx/html/openapi.yaml
     environment:
-      API_URL: /openapi.yaml
+      API_URL: ./openapi.yaml
   react:
     build: ./dockerfiles/react/
     links:
