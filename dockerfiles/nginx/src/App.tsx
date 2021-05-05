@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch, Route} from 'react-router';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './pages/home';
 import Sample from './pages/Sample';
 import ComicDetail from './pages/comicDetail';
@@ -12,13 +12,15 @@ const App = () => {
   return (
     <React.Fragment>
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/sample" component={Sample} />
-        <Route exact path="/detail/:comicID" component={ComicDetail} />
-        <Route exact path="/editComicAbout/:comicID" component={ComicAboutEdit} />
-        <Route exact path="/createComicInfo/:comicID/:volID" component={createComicInfo} />
-        <Route exact path="/createComic" component={createComic} />
-        <Route exact path="/authorManager" component={AuthorManager} />
+        <Router basename={'/comicManager'}>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/sample" component={Sample} />
+          <Route exact path="/detail/:comicID" component={ComicDetail} />
+          <Route exact path="/editComicAbout/:comicID" component={ComicAboutEdit} />
+          <Route exact path="/createComicInfo/:comicID/:volID" component={createComicInfo} />
+          <Route exact path="/createComic" component={createComic} />
+          <Route exact path="/authorManager" component={AuthorManager} />
+        </Router>
       </Switch>
     </React.Fragment>
   )
