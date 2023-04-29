@@ -2,6 +2,7 @@ version: '3.1'
 
 services: 
   mariadb:
+    build: ./dockerfiles/mariadb/
     image: hirarira/comicmanager-mariadb:latest
     volumes:
       - ./dockerfiles/mariadb/sql:/docker-entrypoint-initdb.d
@@ -12,19 +13,33 @@ services:
       MYSQL_PASSWORD: mariadb
       MYSQL_ROOT_PASSWORD: mariadb
   express:
+    build: ./dockerfiles/express/
     image: hirarira/comicmanager-express:latest
     volumes:
       - ./dockerfiles/express/src:/server
+    ports:
+      - 3334:3334
     links:
       - mariadb
     command: [sh, -c, npm install && npm start]
+  swagger:
+    build: ./dockerfiles/swagger/
+    image: hirarira/comicmanager-swagger:latest
+    ports:
+      - 3335:8080
+    volumes:
+      - ./dockerfiles/swagger/openapi.yaml:/usr/share/nginx/html/openapi.yaml
+    environment:
+      API_URL: ./openapi.yaml
   nginx:
+    build: ./dockerfiles/nginx/
     image: hirarira/comicmanager-nginx:latest
     volumes:
       - react-build:/usr/share/nginx/html/
     links:
+      - swagger
       - express
     ports:
-      - 8001:80
+      - 80:80
 volumes:
   react-build:
